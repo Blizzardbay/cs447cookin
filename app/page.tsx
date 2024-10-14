@@ -43,12 +43,12 @@ export default function Home() {
 			  <br></br>
 			  <input type="text" name="password" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
 			  <br></br>
-			  <button type="createUser">Create User</button>
+			  <button type="submit">Create User</button>
 			</form>
 			<form onSubmit={userDestroy} style={{margin: "auto", textAlign: "center"}}>
 			  <input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
 			  <br></br>
-			  <button type="deleteUser">Delete User</button>
+			  <button type="submit">Delete User</button>
 			</form>
 		  </main>
 		  <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
