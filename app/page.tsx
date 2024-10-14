@@ -27,13 +27,13 @@ export default function Home() {
 	async function userDestroy(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault()
 	 
-		const formData = new FormData(event.currentTarget)
+		/*const formData = new FormData(event.currentTarget)
 		const response = await fetch('/app/submit', {
 		  method: 'POST',
 		  body: formData,
 		})
 		
-		
+		*/
 	}
 	return (
 		<div className="">
