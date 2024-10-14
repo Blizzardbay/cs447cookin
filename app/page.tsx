@@ -11,7 +11,7 @@ export default function Home() {
 		  //body: formData,
 		//})
 		
-		var temp_date = new Date()
+		const temp_date = new Date()
 		
 		var user_table = {
 			"username" : formData.get("username"),
