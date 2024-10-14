@@ -13,7 +13,7 @@ export default function Home() {
 		
 		const temp_date = new Date()
 		
-		var user_table = {
+		const user_table = {
 			"username" : formData.get("username"),
 			"password" : formData.get("password"),
 			"creation_date" : (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString(),
