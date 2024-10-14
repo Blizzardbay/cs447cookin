@@ -38,14 +38,14 @@ export default function Home() {
 	return (
 		<div className="">
 		  <main className="">
-			<form onSubmit={userCreate} style={{margin: "auto", textAlign: "Center"}}>
+			<form onSubmit={userCreate} style={{margin: "auto", textAlign: "center"}}>
 			  <input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
 			  <br></br>
 			  <input type="text" name="password" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
 			  <br></br>
 			  <button type="createUser">Create User</button>
 			</form>
-			<form onSubmit={userDestroy} style={{margin: "auto", textAlign: "Center"}}>
+			<form onSubmit={userDestroy} style={{margin: "auto", textAlign: "center"}}>
 			  <input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
 			  <br></br>
 			  <button type="deleteUser">Delete User</button>
