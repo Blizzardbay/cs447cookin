@@ -6,10 +6,10 @@ export default function Home() {
 		event.preventDefault()
 	 
 		const formData = new FormData(event.currentTarget)
-		const response = await fetch('/app/submit', {
-		  method: 'POST',
-		  body: formData,
-		})
+		//const response = await fetch('/app/submit', {
+		 // method: 'POST',
+		  //body: formData,
+		//})
 		
 		var temp_date = new Date()
 		
