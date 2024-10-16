@@ -23,6 +23,8 @@ export default function Home() {
 	async function userDestroy(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault()
 	 
+		const formData = new FormData(event.currentTarget)
+	 
 		await removeData(formData.get("username"));
 	}
 	
