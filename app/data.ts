@@ -27,7 +27,7 @@ export async function createTables() {
 		 `;
 		await sql`COMMIT`;
 		
-		return Response.json();
+		return Response.json("ALL GOOD");
 	}
 	catch (error) {
 		await sql`ROLLBACK`;
