@@ -1,6 +1,10 @@
 import { sql } from '@vercel/postgres';
 
 export class UserInformation {
+	username : string;
+	password : string;
+	creation_date : string;
+	associated_table : int;
 	constructor(username, password, creation_date, associated_table) {
 		this.username = username;
 		this.password = password;
