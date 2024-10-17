@@ -49,6 +49,7 @@ export async function removeUserData(formData: FormData) {
 		await sql`DELETE FROM user_information WHERE username=${formData.get("username")};`;
 	}
 	catch (error) {
+		console.log(formData); // Prevent typescript error
 		return Response.json({ error }, { status: 500 });
 	}
 }
