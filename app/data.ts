@@ -29,13 +29,15 @@ export async function insertUserData(formData: FormData) {
 	try {
 		const temp_date = new Date()
 		
+		const username = formData.get("username");
+		
 		const password = await bcrypt.hash(formData.get("password"), 10);
 		
 		const date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
 		
 		await sql`
 			INSERT INTO user_information (username, password, creation_date, astableid)
-			VALUES (${formData.get("username")}, ${password}, ${date}, ${0})
+			VALUES (${username}, ${password}, ${date}, ${0})
 			ON CONFLICT (pid) DO NOTHING;
 			`;
 	}
