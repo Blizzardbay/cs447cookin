@@ -1,17 +1,8 @@
+'use server';
 import { sql } from '@vercel/postgres';
+import { FormEvent } from 'react'
+import bcrypt from 'bcryptjs';
 
-export class UserInformation {
-	username : string;
-	password : string;
-	creation_date : string;
-	associated_table : number;
-	constructor(username, password, creation_date, associated_table) {
-		this.username = username;
-		this.password = password;
-		this.creation_date = creation_date;
-		this.associated_table = associated_table;
-	}
-}
 export async function createTables() {
 	try {
 		await sql`BEGIN`;
@@ -35,29 +26,62 @@ export async function createTables() {
 	}
 	
 }
-export async function insertData(data) {
+export async function insertUserData(formData: FormData) {
 	try {
-		await sql`BEGIN`;
+		const temp_date = new Date()
+		
+		const password = await bcrypt.hash(formData.get("password"), 10);
+		
+		const date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
+		
 		await sql`
-			INSERT INTO users (username, password, creation_date, astableid)
-			VALUES (${data.username}, ${data.password}, ${data.creation_date}, ${data.associated_table})
+			INSERT INTO user_information (username, password, creation_date, astableid)
+			VALUES (${formData.get("username")}, ${password}, ${date}, ${0})
 			ON CONFLICT (pid) DO NOTHING;
 			`;
-		await sql`COMMIT`;
 	}
 	catch (error) {
-		await sql`ROLLBACK`;
 		return Response.json({ error }, { status: 500 });
 	}
 }
-export async function removeData(user) {
+export async function removeUserData(formData: FormData) {
 	try {
-		await sql`
-				DELETE FROM user_information WHERE username=${user};
-				`;
+		await sql`DELETE FROM user_information WHERE username=${formData.get("username")};`;
 	}
 	catch (error) {
-		await sql`ROLLBACK`;
+		return Response.json({ error }, { status: 500 });
+	}
+}
+export async function tryUserLogin(formData: FormData) {
+	const username = formData.get("username");
+	const password = formData.get("password");
+
+	const password_processed = await bcrypt.hash(password, 10);
+	
+	try {
+		const value = await sql`SELECT password FROM user_information WHERE username=${username}`;
+		
+		if(value.rows !== undefined) {
+			if(value.rows.length !== 0) {
+				bcrypt.compare(password, value.rows[0].password, (error, res1) => {
+					if(error) {
+						throw error;
+					}
+					else {
+						bcrypt.compare(password, password_processed, (error, res2) => {
+							if(error) {
+								throw error;
+							}
+							else {
+								console.log("User:" + username + " has successfully logged in!")
+							}
+						});
+					}
+				});
+			}
+		}
+	}
+	catch (error) {
 		return Response.json({ error }, { status: 500 });
 	}
 }
