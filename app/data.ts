@@ -45,7 +45,7 @@ export async function insertUserData(formData: FormData) {
 		}
 	}
 	catch (error) {
-		return Response.json({ error }, { status: 500 });
+		console.error(Response.json({ error }, { status: 500 }));
 	}
 }
 export async function removeUserData(formData: FormData) {
@@ -56,7 +56,7 @@ export async function removeUserData(formData: FormData) {
 		}
 	}
 	catch (error) {
-		return Response.json({ error }, { status: 500 });
+		console.error(Response.json({ error }, { status: 500 }));
 	}
 }
 export async function tryUserLogin(formData: FormData) {
@@ -93,7 +93,7 @@ export async function tryUserLogin(formData: FormData) {
 				}
 			}
 			catch (error) {
-				return Response.json({ error }, { status: 500 });
+				console.error(Response.json({ error }, { status: 500 }));
 			}
 		}
 	}
