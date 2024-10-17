@@ -29,7 +29,7 @@ export async function insertUserData(formData: FormData) {
 	try {
 		const temp_date = new Date()
 		
-		const username = formData.get("username");
+		const username = formData.get("username").toString();
 		
 		const password = await bcrypt.hash(formData.get("password"), 10);
 		
