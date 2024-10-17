@@ -28,18 +28,21 @@ export async function createTables() {
 export async function insertUserData(formData: FormData) {
 	try {
 		const temp_date = new Date()
+		if(formData.get("username") !== null) {
+			if(formData.get("password") !== null) {
+				const username = formData.get("username").toString();
 		
-		const username = formData.get("username").toString();
-		
-		const password = await bcrypt.hash(formData.get("password"), 10);
-		
-		const date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
-		
-		await sql`
-			INSERT INTO user_information (username, password, creation_date, astableid)
-			VALUES (${username}, ${password}, ${date}, ${0})
-			ON CONFLICT (pid) DO NOTHING;
-			`;
+				const password = await bcrypt.hash(formData.get("password"), 10);
+				
+				const date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
+				
+				await sql`
+					INSERT INTO user_information (username, password, creation_date, astableid)
+					VALUES (${username}, ${password}, ${date}, ${0})
+					ON CONFLICT (pid) DO NOTHING;
+					`;
+			}
+		}
 	}
 	catch (error) {
 		return Response.json({ error }, { status: 500 });
@@ -47,45 +50,51 @@ export async function insertUserData(formData: FormData) {
 }
 export async function removeUserData(formData: FormData) {
 	try {
-		const username = formData.get("username");
-		await sql`DELETE FROM user_information WHERE username=${username};`;
+		if(formData.get("username") !== null) {
+			const username = formData.get("username").toString();
+			await sql`DELETE FROM user_information WHERE username=${username};`;
+		}
 	}
 	catch (error) {
 		return Response.json({ error }, { status: 500 });
 	}
 }
 export async function tryUserLogin(formData: FormData) {
-	const username = formData.get("username");
-	const password = formData.get("password");
+	if(formData.get("username") !== null) {
+		if(formData.get("password") !== null) {
+			const username = formData.get("username");
+			const password = formData.get("password");
 
-	const password_processed = await bcrypt.hash(password, 10);
-	
-	try {
-		const value = await sql`SELECT password FROM user_information WHERE username=${username}`;
-		
-		if(value.rows !== undefined) {
-			if(value.rows.length !== 0) {
-				bcrypt.compare(password, value.rows[0].password, (error, res1) => {
-					if(error) {
-						throw error;
-					}
-					else {
-						bcrypt.compare(password, password_processed, (error, res2) => {
+			const password_processed = await bcrypt.hash(password, 10);
+			
+			try {
+				const value = await sql`SELECT password FROM user_information WHERE username=${username}`;
+				
+				if(value.rows !== undefined) {
+					if(value.rows.length !== 0) {
+						bcrypt.compare(password, value.rows[0].password, (error, res1) => {
 							if(error) {
 								throw error;
 							}
 							else {
-								if(res1 === true && res2 === true) {
-									console.log("User:" + username + " has successfully logged in!")
-								}
+								bcrypt.compare(password, password_processed, (error, res2) => {
+									if(error) {
+										throw error;
+									}
+									else {
+										if(res1 === true && res2 === true) {
+											console.log("User:" + username + " has successfully logged in!")
+										}
+									}
+								});
 							}
 						});
 					}
-				});
+				}
+			}
+			catch (error) {
+				return Response.json({ error }, { status: 500 });
 			}
 		}
-	}
-	catch (error) {
-		return Response.json({ error }, { status: 500 });
 	}
 }
