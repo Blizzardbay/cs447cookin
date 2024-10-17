@@ -46,10 +46,10 @@ export async function insertUserData(formData: FormData) {
 }
 export async function removeUserData(formData: FormData) {
 	try {
-		await sql`DELETE FROM user_information WHERE username=${formData.get("username")};`;
+		const username = formData.get("username");
+		await sql`DELETE FROM user_information WHERE username=${username};`;
 	}
 	catch (error) {
-		console.log(formData); // Prevent typescript error
 		return Response.json({ error }, { status: 500 });
 	}
 }
@@ -74,7 +74,9 @@ export async function tryUserLogin(formData: FormData) {
 								throw error;
 							}
 							else {
-								console.log("User:" + username + " has successfully logged in!")
+								if(res1 === true && res2 === true) {
+									console.log("User:" + username + " has successfully logged in!")
+								}
 							}
 						});
 					}
