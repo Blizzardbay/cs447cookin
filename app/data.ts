@@ -1,6 +1,5 @@
 'use server';
 import { sql } from '@vercel/postgres';
-import { FormEvent } from 'react'
 import bcrypt from 'bcryptjs';
 
 export async function createTables() {
