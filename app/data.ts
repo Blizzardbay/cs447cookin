@@ -30,7 +30,7 @@ export async function insertUserData(formData: FormData) {
 		const temp_date = new Date()
 		if(formData.get("username") !== null) {
 			if(formData.get("password") !== null) {
-				const username = formData.get("username").toString();
+				const username = formData.get("username")!.toString();
 		
 				const password = await bcrypt.hash(formData.get("password"), 10);
 				
@@ -51,7 +51,7 @@ export async function insertUserData(formData: FormData) {
 export async function removeUserData(formData: FormData) {
 	try {
 		if(formData.get("username") !== null) {
-			const username = formData.get("username").toString();
+			const username = formData.get("username")!.toString();
 			await sql`DELETE FROM user_information WHERE username=${username};`;
 		}
 	}
@@ -62,8 +62,8 @@ export async function removeUserData(formData: FormData) {
 export async function tryUserLogin(formData: FormData) {
 	if(formData.get("username") !== null) {
 		if(formData.get("password") !== null) {
-			const username = formData.get("username");
-			const password = formData.get("password");
+			const username = formData.get("username")!.toString();
+			const password = formData.get("password")!.toString();
 
 			const password_processed = await bcrypt.hash(password, 10);
 			
