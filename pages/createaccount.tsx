@@ -1,6 +1,6 @@
 'use client';
 
-import { insertUserData } from '../app/data';
+import { insertUserData } from '@/app/util/data';
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import Link from 'next/link';

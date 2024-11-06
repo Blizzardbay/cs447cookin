@@ -10,17 +10,13 @@ export default function Home({user_logged_in, username}) {
 	const [login_color, setLoginColor] = useState("black");
     const [login_text, setLoginText] = useState("");
 	
-	if(user_logged_in == true) {
-		router.back()
-	}
-	
-	const login = async (data) => {
+	const remove = async (data) => {
 		data.preventDefault();
 		
-		const result = await tryUserLogin(new FormData(data.target), user_logged_in);
+		const result = await removeUserData(new FormData(data.target), user_logged_in);
 		
 		if(result.success == true) {
-			router.push(result.redirectUrl);
+			router.push("/mainpage");
 		}
 		else {
 			setLoginColor("red");
@@ -31,17 +27,12 @@ export default function Home({user_logged_in, username}) {
 	return (
 		<div className="" style={{margin: "auto", textAlign: "center"}}>
 		  <main className="">
-			<form onSubmit={login} style={{textAlign: "center"}}>
+			<form onSubmit={remove} style={{textAlign: "center"}}>
 				<p style={{textColor: login_color}}>{login_text}</p>
 				<input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: login_color, marginBottom: "1px"}}/>
 				<br></br>
-				<input type="text" name="password" style={{borderStyle: "solid", borderWidth: "1px", borderColor: login_color, marginBottom: "1px"}}/>
-				<br></br>
-				<button type="submit" style={{textColor: "black"}}>Log In</button>
+				<button type="submit" style={{textColor: "black"}}>Delete User</button>
 			</form>
-			<br></br>
-			<Link href="/createaccount" style={{color: "#0000EE"}}>Don't have an Account? Create one!</Link>
-			<br></br>
 			<br></br>
 			<Link href="/mainpage" style={{color: "#0000EE"}}>Back To Main Page</Link>
 			</main>
@@ -49,36 +40,4 @@ export default function Home({user_logged_in, username}) {
 			</footer>
 		</div>
 	);
-}
-export async function getServerSideProps(context) {
-	const cookie_list = context.req.cookies;
-
-	if(cookie_list != {}) {
-		const user = cookie_list["LoggedInUser"];
-		
-		if (user !== undefined) {
-			return {
-				props: {
-					user_logged_in: true,
-					username: user,
-				},
-			};
-		} 
-		else {
-			return {
-				props: {
-					user_logged_in: false,
-					username: "",
-				},
-			};
-		}
-	}
-	else {
-		return {
-			props: {
-				user_logged_in: false,
-				username: "",
-			},
-		};
-	}
 }

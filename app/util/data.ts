@@ -56,11 +56,13 @@ export async function insertUserData(formData: FormData) {
 		return { success: false, redirectUrl: "/mainpage", error: "Invaild form data. Please contact website administrator."};
 	}
 }
-export async function removeUserData(formData: FormData) {
+export async function removeUserData(formData: FormData, user_logged_in) {
 	try {
 		if(formData.get("username") !== null) {
 			const username = formData.get("username")!.toString();
 			await sql`DELETE FROM user_information WHERE username=${username};`;
+			
+			return LogOut(username);
 		}
 	}
 	catch (error) {
@@ -80,7 +82,7 @@ export async function LogOut(username) {
 		return { success: true, redirectUrl: "/mainpage"};
 	}
 	else {
-		return { success: false, error: "Unable to create cookie. Please contact website administrator." };
+		return { success: false, error: "Unable to delete cookie. Please contact website administrator." };
 	}
 }
 export async function tryUserLogin(formData: FormData, is_logged_in) {

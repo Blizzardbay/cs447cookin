@@ -24,6 +24,7 @@ export default function Home({user_logged_in, username}) {
 			return (
 				<div className="">
 					<div className="topbar" style={{margin: "auto", marginBottom: "5%", borderStyle: "solid", borderWidth: "1px", borderColor: "black", width: "50%"}}>
+						<Link href="/profile"  style={{color: "#0000EE", float: "right"}}>Profile</Link>
 						<Link href="/"  onClick={logout} style={{color: "#0000EE", float: "right"}}>Log Out</Link>
 						<p></p>
 					</div>
