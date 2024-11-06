@@ -1,5 +1,5 @@
 'use client';
-import { LogOut } from '@/app/data';
+import { LogOut } from '@/app/util/data';
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'

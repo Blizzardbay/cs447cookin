@@ -1,4 +1,4 @@
-import { insertUserData, removeUserData, tryUserLogin } from '@/app/data';
+import { insertUserData, removeUserData, tryUserLogin } from '@/app/util/data';
 import { useRouter, usePathname } from "next/navigation";
 import { useState } from 'react';
 import Link from 'next/link';

@@ -30,33 +30,13 @@ export default function Home() {
 	return (
 		<div>
 			<h1 style={{ fontSize: "60px", color:"#0000EE", textAlign: "center", marginTop: "20%", position: "abosolute"}}>Loading {dots}</h1>
-		<div className={`${inter.className} antialiased relative min-h-screen min-w-[768px] mx-auto flex flex-col gap-16 justify-center items-center`}>
+				<div className={`${inter.className} antialiased relative min-h-screen min-w-[768px] mx-auto flex flex-col gap-16 justify-center items-center`}></div>
 			<header className={`${pacifico.className} antialiased flex flex-col gap-4 items-center justify-center`}>
 				<h1 className='text-8xl'>Cookin'</h1>
 				<p className='text-2xl'>Cookin' Up Flavor, One Recipe at a Time!</p>
 			</header>
 		  	<main className="w-[30%] flex flex-col gap-6 justify-center items-center [&>form]:m-auto [&>form]:text-center [&>form]:w-full ">
 				<h3 className='text-4xl font-semibold'>Ready up 😋!</h3>
-			{/* <form action={insertUserData}>
-				<div className='flex flex-col items-start'>
-					<label htmlFor='username'>Email</label>
-					<input type="text" name="username" className="w-full h-8 border-[1px] border-black rounded-md"/>
-				</div>
-				<div className='flex flex-col items-start'>
-					<label htmlFor="password">Password</label>
-					<input type="text" name="password" className="w-full h-8 border-[1px] border-black rounded-md"/>
-				</div>
-				<div className='w-full text-white bg-black rounded-full'>
-					<button type="submit" className='h-8'>Create User</button>
-				</div>
-			</form>
-			<form action={removeUserData}>
-				<input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
-				<br></br>
-				<div className='w-full text-white bg-black rounded-full'>
-					<button type="submit" className='h-8'>Delete User</button>
-				</div>
-			</form> */}
 				<form action={tryUserLogin} className='w-full flex flex-col gap-6 [&>label]:font-semibold'>
 					<div className='flex flex-col gap-[2px] items-start'>
 						<label htmlFor='username' className='text-lg'>Email</label>
@@ -71,7 +51,6 @@ export default function Home() {
 					</div>
 				</form>
 				<p>Need an account? <Link href="/" className='font-semibold'>Sign up</Link></p>
-
 			</main>
 			<Image
 				src={cookinIcon}
