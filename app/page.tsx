@@ -1,33 +1,30 @@
 'use client';
 
-import { insertUserData, removeUserData, tryUserLogin } from '@/app/data';
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+	const router = useRouter();
+	
+	router.push("/mainpage");
+	
+	const [dots, setDots] = useState("");
+
+	const interval = setInterval(() => {
+		setDots(dots.concat("."));
+		if(dots.length > 2) {
+			setDots("");
+		}
+	}, 1000);
+	
+	
+	useEffect(() => {
+		return () => clearInterval(interval);
+	}, []);
+	
 	return (
-		<div className="">
-		  <main className="">
-			<form action={insertUserData} style={{margin: "auto", textAlign: "center"}}>
-				<input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
-				<br></br>
-				<input type="text" name="password" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
-				<br></br>
-				<button type="submit">Create User</button>
-			</form>
-			<form action={removeUserData} style={{margin: "auto", textAlign: "center"}}>
-				<input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
-				<br></br>
-				<button type="submit">Delete User</button>
-			</form>
-			<form action={tryUserLogin} style={{margin: "auto", textAlign: "center"}}>
-				<input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
-				<br></br>
-				<input type="text" name="password" style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", marginBottom: "1px"}}/>
-				<br></br>
-				<button type="submit">Login</button>
-			</form>
-			</main>
-			<footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-			</footer>
+		<div>
+			<h1 style={{ fontSize: "60px", color:"#0000EE", textAlign: "center", marginTop: "20%", position: "abosolute"}}>Loading {dots}</h1>
 		</div>
 	);
 }
