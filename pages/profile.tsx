@@ -7,8 +7,8 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 export default function Home({user_logged_in, username}) {
 	const router = useRouter();
 	
-	const [login_color, setLoginColor] = useState("black");
-    const [login_text, setLoginText] = useState("");
+	const [remove_color, setRemoveColor] = useState("black");
+    const [remove_text, setRemoveText] = useState("");
 	
 	const remove = async (data) => {
 		data.preventDefault();
@@ -16,11 +16,11 @@ export default function Home({user_logged_in, username}) {
 		const result = await removeUserData(new FormData(data.target), user_logged_in);
 		
 		if(result.success == true) {
-			router.push("/mainpage");
+			router.push(result.redirectURL);
 		}
 		else {
-			setLoginColor("red");
-			setLoginText(result.error);
+			setRemoveColor("red");
+			setRemoveText(result.error);
 		}
 	};
 	
@@ -28,8 +28,8 @@ export default function Home({user_logged_in, username}) {
 		<div className="" style={{margin: "auto", textAlign: "center"}}>
 		  <main className="">
 			<form onSubmit={remove} style={{textAlign: "center"}}>
-				<p style={{textColor: login_color}}>{login_text}</p>
-				<input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: login_color, marginBottom: "1px"}}/>
+				<p style={{textColor: remove_color}}>{remove_text}</p>
+				<input type="text" name="username" style={{borderStyle: "solid", borderWidth: "1px", borderColor: remove_color, marginBottom: "1px"}}/>
 				<br></br>
 				<button type="submit" style={{textColor: "black"}}>Delete User</button>
 			</form>

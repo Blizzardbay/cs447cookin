@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 
 export async function createTables() {
-	try {
+	/*try {
 		await sql`BEGIN`;
 		await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 		await sql`
@@ -23,8 +23,126 @@ export async function createTables() {
 	catch (error) {
 		await sql`ROLLBACK`;
 		return Response.json({ error }, { status: 500 });
+	}*/
+	/*try {
+		await sql`BEGIN`;
+		await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+		await sql`
+		 CREATE TABLE IF NOT EXISTS recipe (
+		   pid UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+		   recipe_title TEXT NOT NULL UNIQUE,
+		   cuisine TEXT NOT NULL,
+		   ingredients TEXT [],
+		   directions TEXT [],
+		   serving integer NULL,
+		   prep_time integer NULL,
+		   cook_time integer NULL,
+		   total_time integer NULL,
+		   notes TEXT NOT NULL,
+		   creator integer NULL,
+		   creation_date TEXT NOT NULL,
+		   food_type TEXT NOT NULL,
+		   food_cost TEXT NOT NULL
+		 );
+		 `;
+		await sql`COMMIT`;
+		
+		return Response.json("ALL GOOD");*/
+	//}
+	//catch (error) {
+		//await sql`ROLLBACK`;
+		//return Response.json({ error }, { status: 500 });
+	//}
+}
+export async function insertRecipe(formData: FormData, creator) {
+	try {
+		const temp_date = new Date()
+		
+		const recipe_title = formData.get("recipe_title");
+		if(!recipe_title) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Recipe Title. Recipe Title must be non-null and not empty."};
+		}
+		const cuisine = formData.get("cuisine");
+		if(!cuisine) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Cuisine. Cuisine must be non-null and not empty."};
+		}
+		const ingredients = [formData.get("ingredients")];
+		if(!ingredients) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Ingredients. Ingredients must be non-null and not empty."};
+		}		
+		const directions = [formData.get("directions")];
+		if(!directions) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Directions. Directions must be non-null and not empty."};
+		}
+		const serving = formData.get("serving");
+		if(!serving) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Serving. Serving must be non-null and not empty."};
+		}
+		const prep_time = formData.get("prep_time");
+		if(!prep_time) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Prep Time. Prep Time must be non-null and not empty."};
+		}
+		const cook_time = formData.get("cook_time");
+		if(!cook_time) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Cook Time. Cook Time must be non-null and not empty."};
+		}
+		const total_time = formData.get("total_time");
+		if(!total_time) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Total Time. Total Time must be non-null and not empty."};
+		}
+		const notes = formData.get("notes");
+		if(!notes) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Notes. Notes must be non-null and not empty."};
+		}
+		const food_type = formData.get("food_type");
+		if(!food_type) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Food Type. Food Type must be non-null and not empty."};
+		}
+		const food_cost = formData.get("food_cost");
+		if(!food_cost) {
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild Food Cost. Food Cost must be non-null and not empty."};
+		}
+		const creation_date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
+				
+		await sql`
+			INSERT INTO recipe (recipe_title, cuisine, ingredients, directions, serving, prep_time, cook_time, total_time, notes, creator, creation_date, food_type, food_cost)
+			VALUES (${recipe_title}, ${cuisine}, ${ingredients}, ${directions}, ${serving}, ${prep_time}, ${cook_time}, ${total_time}, ${notes}, ${creator}, ${creation_date}, ${food_type}, ${food_cost})
+			ON CONFLICT (pid) DO NOTHING;
+		`;
+		return { success: true, redirectUrl: "/mainpage", error: ""};
 	}
-	
+	catch (error) {
+		return { success: false, redirectUrl: "/mainpage", error: "Invaild form data. Please contact website administrator."};
+	}
+}
+export async function deleteRecipe(formData: FormData) {
+	try {
+		if(formData.get("recipe_title") !== null) {
+			const recipe_title = formData.get("recipe_title")!.toString();
+			await sql`DELETE FROM recipe WHERE recipe_title=${recipe_title};`;
+			
+			return { success: true, redirectUrl: "/mainpage", error: ""};
+		}
+		else {
+			return { success: false, redirectUrl: "/profile", error: "Invaild Recipe Title. Recipe Title must be non-null and not empty."};
+		}
+	}
+	catch (error) {
+		console.error(Response.json({ error }, { status: 500 }));
+		return { success: false, redirectUrl: "/profile", error: "SQL Error: Please contact website administrator."};
+	}
+
+}
+export async function GetAllRecipes() {
+	try {
+		const ret = await sql`SELECT * FROM recipe`;
+		
+		return { success: true, redirectUrl: "/mainpage", error: "", data: ret};
+	}
+	catch (error) {
+		console.error(Response.json({ error }, { status: 500 }));
+		return { success: false, redirectUrl: "/mainpage", error: "SQL Error: Please contact website administrator."};
+	}
 }
 export async function insertUserData(formData: FormData) {
 	try {
@@ -64,9 +182,13 @@ export async function removeUserData(formData: FormData, user_logged_in) {
 			
 			return LogOut(username);
 		}
+		else {
+			return { success: false, redirectUrl: "/profile", error: "Invaild Username. Username must be non-null and not empty."};
+		}
 	}
 	catch (error) {
 		console.error(Response.json({ error }, { status: 500 }));
+		return { success: false, redirectUrl: "/profile", error: "SQL Error: Please contact website administrator."};
 	}
 }
 export async function LogOut(username) {
