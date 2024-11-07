@@ -16,7 +16,7 @@ export default function Login() {
 				<p className='text-lg'>Cookin' Up Flavor, One Recipe at a Time!</p>
 			</header>
 		  	<main className="w-[30%] flex flex-col gap-6 justify-center items-center [&>form]:m-auto [&>form]:text-center [&>form]:w-full ">
-				<Link href="/home" className='text-3xl font-semibold md:text-4xl'>Ready up 😋!</Link>
+				<Link href="/mainpage" className='text-3xl font-semibold md:text-4xl'>Ready up 😋!</Link>
 			{/* <form action={insertUserData}>
 				<div className='flex flex-col items-start'>
 					<label htmlFor='username'>Email</label>

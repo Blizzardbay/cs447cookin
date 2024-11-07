@@ -78,6 +78,7 @@ export default function Home({user_logged_in, username, recipes}) {
 					
 					setFormColor("black");
 					setFormText("");
+					router.refresh();
 				}
 				else {
 					setFormColor("red");
@@ -145,6 +146,8 @@ export default function Home({user_logged_in, username, recipes}) {
 					
 					setFormColor("black");
 					setFormText("");
+					
+					router.refresh();
 				}
 				else {
 					setFormColor("red");

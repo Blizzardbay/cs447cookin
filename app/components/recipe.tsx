@@ -14,21 +14,21 @@ const Recipe = ({ recipe }) => {
 	const food_cost = recipe.food_cost;
 
 	return (
-		<div style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", display: "inline-block"}}>
-			<p>Recipe Title: {recipe_title}</p>
-			<p>Cuisine: {cuisine}</p>
-			<p>Ingredients: {ingredients}</p>
-			<p>Directions: {directions}</p>
-			<p>Serving: {serving}</p>
-			<p>Prep Time: {prep_time}</p>
-			<p>Cook Time: {cook_time}</p>
-			<p>Total Time: {total_time}</p>
-			<p>Notes: {notes}</p>
-			<p>Creator: {creator}</p>
-			<p>Creation Date: {creation_date}</p>
-			<p>Creation Date: {creation_date}</p>
-			<p>Food Type: {food_type}</p>
-			<p>Food Cost: {food_cost}</p>
+		<div style={{borderStyle: "solid", borderWidth: "1px", borderColor: "black", display: "inline-block", verticalAlign: "top", marginRight: "5px"}}>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Recipe Title: {recipe_title}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Cuisine: {cuisine}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Ingredients: {ingredients}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Directions: {directions}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Serving: {serving}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Prep Time: {prep_time}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Cook Time: {cook_time}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Total Time: {total_time}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Notes: {notes}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Creator: {creator}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Creation Date: {creation_date}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Creation Date: {creation_date}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Food Type: {food_type}</p>
+			<p style={{ wordWrap: "break-word", width: "250px"}}>Food Cost: {food_cost}</p>
 		</div>
 	);
 };

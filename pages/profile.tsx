@@ -16,7 +16,12 @@ export default function Home({user_logged_in, username}) {
 		const result = await removeUserData(new FormData(data.target), user_logged_in);
 		
 		if(result.success == true) {
-			router.push(result.redirectURL);
+			if(result.redirectUrl === undefined) {
+				router.push("/mainpage");
+			}
+			else {
+				router.push(result.redirectUrl);
+			}
 		}
 		else {
 			setRemoveColor("red");
