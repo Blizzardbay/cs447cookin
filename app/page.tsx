@@ -6,15 +6,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import cookinIcon from '@/app/assets/images/cookinIcon1.png';
 
-export default function Home() {
+export default function Login() {
 	return (
-		<div className={`${inter.className} antialiased relative min-h-screen min-w-[768px] mx-auto flex flex-col gap-16 justify-center items-center`}>
+		<div className={`${inter.className} antialiased relative min-h-screen min-w-[768px] flex flex-col gap-16 justify-center items-center`}>
 			<header className={`${pacifico.className} antialiased flex flex-col gap-4 items-center justify-center`}>
 				<h1 className='text-8xl'>Cookin'</h1>
-				<p className='text-2xl'>Cookin' Up Flavor, One Recipe at a Time!</p>
+				<p className='text-lg'>Cookin' Up Flavor, One Recipe at a Time!</p>
 			</header>
 		  	<main className="w-[30%] flex flex-col gap-6 justify-center items-center [&>form]:m-auto [&>form]:text-center [&>form]:w-full ">
-				<h3 className='text-4xl font-semibold'>Ready up 😋!</h3>
+				<Link href="/home" className='text-3xl font-semibold md:text-4xl'>Ready up 😋!</Link>
 			{/* <form action={insertUserData}>
 				<div className='flex flex-col items-start'>
 					<label htmlFor='username'>Email</label>
@@ -44,11 +44,9 @@ export default function Home() {
 						<label htmlFor="password" className='text-lg'>Password</label>
 						<input type="text" name="password" placeholder='Enter your password' className="w-full h-10 px-3 border-[1px] border-[#808080] rounded-md truncate"/>
 					</div>
-					<div className='w-full text-white bg-black rounded-full'>
-						<button type="submit" className='h-10 text-lg'>Login</button>
-					</div>
+					<button type="submit" className='w-full h-10 text-lg text-white bg-black rounded-full'>Login</button>
 				</form>
-				<p>Need an account? <Link href="/" className='font-semibold'>Sign up</Link></p>
+				<p>Need an account? <Link href="/signup" className='font-semibold'>Sign up</Link></p>
 
 			</main>
 			<Image

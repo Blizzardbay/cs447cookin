@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import {inter, pacifico} from '@/app/fonts/fonts';
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -24,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-screen">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.className} antialiased`}
       >
         {children}
       </body>
