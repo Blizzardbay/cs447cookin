@@ -9,7 +9,7 @@ import profileImage from "@/app/assets/images/pfp.jpg"
 
 export default function SideBar() {
     return (
-        <div className="w-20 h-screen flex flex-col justify-between items-center bg-black">
+        <div className="w-24 h-full flex flex-col justify-between items-center bg-black">
             <div className="flex flex-col justify-center items-center">
                 <Link href="/" className="py-8">
                     <Image src={profileImage} alt="Profile Icon" className="w-16 border-2 border-white rounded-full" />

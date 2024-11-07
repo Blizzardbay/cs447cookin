@@ -1,24 +1,28 @@
+import {pacifico} from '@/app/fonts/fonts'
 import SideBar from "../components/sideBar"
+import RecipeGrid from "../components/recipeGrid"
+import Header from "../components/header"
 import AddRecipeBtn from "../components/addRecipeBtn"
-import RecipeCard from "../components/recipeCard"
-
 import RecipeImage from "../assets/images/grilled-cheese-sandwich.jpg"
 
+
 export default function Home() {
+    const recipes = [
+        {title: "Grilled Cheese Sandwich", image: RecipeImage},
+    ]
+    
     return (
-        <div className="max-h-screen w-full flex gap-2 items-center">
+        <div className="h-screen min-w-[768px] w-full flex items-center overflow-hidden">
             <SideBar></SideBar>
-            <div className="px-8 w-full h-screen flex flex-col overflow-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 place-content-center place-items-center">
-                    <RecipeCard title="Grilled Cheese" image={RecipeImage}></RecipeCard>
-                    <RecipeCard title="Grilled Cheese" image={RecipeImage}></RecipeCard>
-                    <RecipeCard title="Grilled Cheese" image={RecipeImage}></RecipeCard>
-                    <RecipeCard title="Grilled Cheese" image={RecipeImage}></RecipeCard>
-                    <RecipeCard title="Grilled Cheese" image={RecipeImage}></RecipeCard>
-                    <RecipeCard title="Grilled Cheese" image={RecipeImage}></RecipeCard>
-                    <RecipeCard title="Grilled Cheese" image={RecipeImage}></RecipeCard>
+            <div className="w-full h-full flex flex-col">
+                <Header></Header>
+                <div className="px-8 pt-4 pb-8 w-full grow flex flex-col gap-4">
+                    <div className='pb-4 w-full flex flex-row justify-between items-center border-b-2'>
+                        <h2 className={`${pacifico.className} text-3xl`}>Recipes</h2>
+                        <AddRecipeBtn></AddRecipeBtn>
+                    </div>
+                    <RecipeGrid recipes={recipes}></RecipeGrid>
                 </div>
-                <AddRecipeBtn></AddRecipeBtn>
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import {inter, pacifico} from '@/app/fonts/fonts';
+import {inter} from '@/app/fonts/fonts';
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-screen">
+    <html lang="en" className="max-h-screen max-w-screen">
       <body
         className={`${inter.className} antialiased`}
       >

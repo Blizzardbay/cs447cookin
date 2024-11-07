@@ -48,7 +48,7 @@ export default function Login() {
 					</div>
 					<button type="submit" className='w-full h-10 text-lg text-white bg-black rounded-full'>Login</button>
 				</form>
-				<p>Need an account? <Link href="/mainpage" className='font-semibold'>Sign up</Link></p>
+				<p>Need an account? <Link href="/signup" className='font-semibold'>Sign up</Link></p>
 
 			</main>
 			<Image
