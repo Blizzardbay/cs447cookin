@@ -1,5 +1,6 @@
-import { IoAddCircleOutline } from "react-icons/io5";
+import { StaticImageData } from "next/image";
 import { pacifico } from "@/app/fonts/fonts";
+import { FaRegEdit } from "react-icons/fa";
 import Form from "next/form";
 import { useState, useEffect } from "react";
 import {
@@ -12,39 +13,59 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-// TODO: Check if image empty
-// TODO: Add recipe to database
+// TODO: Modify recipe from database
 
-export default function AddRecipeBtn() {
+type RecipeCardProps = {
+  recipe: {
+    image?: string;
+    title?: string;
+    cuisine?: string;
+    foodType?: string;
+    cost?: string;
+    ingredients?: string[];
+    directions?: string[];
+    servings?: number;
+    prepTime?: number;
+    cookTime?: number;
+    totalTime?: number;
+    favorite?: boolean;
+    notes?: string;
+  };
+};
+
+type RecipeCardStyle = {
+  style: string;
+};
+
+export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & RecipeCardStyle) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
-  const [recipe, setRecipe] = useState({
+  const [editRecipe, setEditRecipe] = useState({
     image: "",
     title: "",
     cuisine: "",
     foodType: "",
     cost: "",
-    ingredients: [""],
-    directions: [""],
+    ingredients: "",
+    directions: "",
     servings: 0,
     prepTime: 0,
     cookTime: 0,
     totalTime: 0,
-    favorite: false,
     notes: "",
-  }); // State for recipe
+  }); // State for editRecipe
 
-  // Add recipe to database
-  // If you remove this function go to line 280 and remove the function from the Button
+  // Add edit recipe to database
+  // If you remove this function go to line 305 and remove the function from Button
   const submitRecipe = async () => {
       try {
-        // Add recipe function here (use recipe variable to add recipe properties)
+        // Add editRecipe function here (use editRecipe variable to add editRecipe properties)
         // Code here...
       } catch (error) {
-        console.error(`Error adding recipe: ${error}`);
+        console.error(`Error adding editRecipe: ${error}`);
       } finally {
         // Debug message
-        console.log(`Fetching recipes: ${JSON.stringify(recipe)}`);
+        console.log(`Fetching recipes: ${JSON.stringify(editRecipe)}`);
       }
   };
 
@@ -52,9 +73,10 @@ export default function AddRecipeBtn() {
     <div>
       <Button
         onClick={onOpen}
-        className="w-fit h-min py-1 px-4 flex flex-row gap-4 justify-center items-center text-lg border-2 border-black bg-white rounded-xl"
+        className={`${style} w-fit h-min py-1 px-4 flex flex-row gap-4 justify-center items-center text-lg bg-transparent rounded-xl hover:bg-black`}
       >
-        Add Recipe <IoAddCircleOutline size={32} />
+        <p className="text-white font-semibold">Edit</p>
+        <FaRegEdit size={28} color="white" />
       </Button>
       <Modal
         isOpen={isOpen}
@@ -74,7 +96,7 @@ export default function AddRecipeBtn() {
               <ModalHeader
                 className={`${pacifico.className} flex flex-col gap-1`}
               >
-                Create Recipe
+                Edit Recipe
               </ModalHeader>
               <ModalBody>
                 {/* Create form (action prop navigates to the same route '/home')*/}
@@ -86,9 +108,8 @@ export default function AddRecipeBtn() {
                       <input
                         type="file"
                         name="image"
-                        accept=".jpg, .jpeg, .png"
                         onChange={(e) =>
-                          setRecipe({ ...recipe, image: e.target.value })
+                          setEditRecipe({ ...editRecipe, image: e.target.value })
                         }
                         className="w-full h-10 px-2 m-auto text-center border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -98,9 +119,11 @@ export default function AddRecipeBtn() {
                       <input
                         type="text"
                         name="title"
-                        placeholder="Enter the title of your recipe"
+                        placeholder={
+                          recipe.title || "Enter the title of your editRecipe"
+                        }
                         onChange={(e) =>
-                          setRecipe({ ...recipe, title: e.target.value })
+                          setEditRecipe({ ...editRecipe, title: e.target.value })
                         }
                         className="w-full h-10 px-3 border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -112,23 +135,23 @@ export default function AddRecipeBtn() {
                         id="cuisine"
                         defaultValue={"default"}
                         onChange={(e) =>
-                          setRecipe({ ...recipe, cuisine: e.target.value })
+                          setEditRecipe({ ...editRecipe, cuisine: e.target.value })
                         }
                         className="w-full h-10 border-[1px] border-[#808080] rounded-md truncate"
                       >
                         <option value="default" disabled>
                           Please select
                         </option>
-                        <option value="American">American</option>
-                        <option value="Chinese">Chinese</option>
-                        <option value="Mexican">Mexican</option>
-                        <option value="Japanese">Japanese</option>
-                        <option value="Greek">Greek</option>
-                        <option value="French">French</option>
-                        <option value="Thai">Thai</option>
-                        <option value="Spanish">Spanish</option>
-                        <option value="Italian">Italian</option>
-                        <option value="Mediterranean">Mediterranean</option>
+                        <option value="american">American</option>
+                        <option value="chinese">Chinese</option>
+                        <option value="mexican">Mexican</option>
+                        <option value="japanese">Japanese</option>
+                        <option value="greek">Greek</option>
+                        <option value="french">French</option>
+                        <option value="thai">Thai</option>
+                        <option value="spanish">Spanish</option>
+                        <option value="italian">Italian</option>
+                        <option value="mediterranean">Mediterranean</option>
                       </select>
                     </div>
                     <div>
@@ -138,23 +161,23 @@ export default function AddRecipeBtn() {
                         id="foodType"
                         defaultValue={"default"}
                         onChange={(e) =>
-                          setRecipe({ ...recipe, foodType: e.target.value })
+                          setEditRecipe({ ...editRecipe, foodType: e.target.value })
                         }
                         className="w-full h-10 border-[1px] border-[#808080] rounded-md truncate"
                       >
                         <option value="default" disabled>
                           Please select
                         </option>
-                        <option value="Meat & Veggies">Meat & Veggies</option>
-                        <option value="Fit & Wholesome">Fit & Wholesome</option>
-                        <option value="Quick & Easy">Quick & Easy</option>
-                        <option value="Comfort Food">Comfort Food</option>
-                        <option value="Desserts">Desserts</option>
-                        <option value="Keto">Keto</option>
-                        <option value="Vegan">Vegan</option>
-                        <option value="Vegetarian">Vegetarian</option>
-                        <option value="Gluten-Free">Gluten-Free</option>
-                        <option value="Intermittent Fasting">
+                        <option value="meat+veggies">Meat & Veggies</option>
+                        <option value="fit+wholesome">Fit & Wholesome</option>
+                        <option value="quick+easy">Quick & Easy</option>
+                        <option value="comfortFood">Comfort Food</option>
+                        <option value="desserts">Desserts</option>
+                        <option value="keto">Keto</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="glutenFree">Gluten-Free</option>
+                        <option value="intermittentFasting">
                           Intermittent Fasting
                         </option>
                       </select>
@@ -166,28 +189,28 @@ export default function AddRecipeBtn() {
                         id="cost"
                         defaultValue={"default"}
                         onChange={(e) =>
-                          setRecipe({ ...recipe, cost: e.target.value })
+                          setEditRecipe({ ...editRecipe, cost: e.target.value })
                         }
                         className="w-full h-10 border-[1px] border-[#808080] rounded-md truncate"
                       >
                         <option value="default" disabled>
                           Please select
                         </option>
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
                       </select>
                     </div>
                     <div>
                       <label htmlFor="ingredients">Ingredients</label>
                       <textarea
                         name="ingredients"
-                        placeholder="Enter the ingredients of your recipe"
+                        placeholder={
+                          recipe.ingredients?.join(", ") ||
+                          "Enter the ingredients of your editRecipe"
+                        }
                         onChange={(e) =>
-                          setRecipe({
-                            ...recipe,
-                            ingredients: e.target.value.split(","),
-                          })
+                          setEditRecipe({ ...editRecipe, ingredients: e.target.value })
                         }
                         className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -196,12 +219,12 @@ export default function AddRecipeBtn() {
                       <label htmlFor="instructions">Instructions</label>
                       <textarea
                         name="instructions"
-                        placeholder="Enter the instructions of your recipe"
+                        placeholder={
+                          recipe.directions?.join(", ") ||
+                          "Enter the instructions of your editRecipe"
+                        }
                         onChange={(e) =>
-                          setRecipe({
-                            ...recipe,
-                            directions: e.target.value.split(","),
-                          })
+                          setEditRecipe({ ...editRecipe, directions: e.target.value })
                         }
                         className="w-full h-20 px-3 border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -211,10 +234,10 @@ export default function AddRecipeBtn() {
                       <input
                         type="number"
                         name="servings"
-                        placeholder="e.g. 8"
+                        placeholder={recipe.servings?.toString() || "e.g. 8"}
                         onChange={(e) =>
-                          setRecipe({
-                            ...recipe,
+                          setEditRecipe({
+                            ...editRecipe,
                             servings: parseInt(e.target.value),
                           })
                         }
@@ -226,10 +249,10 @@ export default function AddRecipeBtn() {
                       <input
                         type="number"
                         name="prepTime"
-                        placeholder="e.g. 10"
+                        placeholder={recipe.prepTime?.toString() || "e.g. 10"}
                         onChange={(e) =>
-                          setRecipe({
-                            ...recipe,
+                          setEditRecipe({
+                            ...editRecipe,
                             prepTime: parseInt(e.target.value),
                           })
                         }
@@ -241,10 +264,10 @@ export default function AddRecipeBtn() {
                       <input
                         type="number"
                         name="cookTime"
-                        placeholder="e.g. 15"
+                        placeholder={recipe.cookTime?.toString() || "e.g. 15"}
                         onChange={(e) =>
-                          setRecipe({
-                            ...recipe,
+                          setEditRecipe({
+                            ...editRecipe,
                             cookTime: parseInt(e.target.value),
                           })
                         }
@@ -254,16 +277,18 @@ export default function AddRecipeBtn() {
                     <div>
                       <p>
                         <span className="mr-8 font-semibold">Total Time </span>
-                        {recipe.cookTime + recipe.prepTime} min
+                        {editRecipe.cookTime + editRecipe.prepTime} min
                       </p>
                     </div>
                     <div>
                       <label htmlFor="notes">Notes (Optional)</label>
                       <textarea
                         name="notes"
-                        placeholder="Enter notes for your recipe"
+                        placeholder={
+                          recipe.notes || "Enter notes for your editRecipe"
+                        }
                         onChange={(e) =>
-                          setRecipe({ ...recipe, notes: e.target.value })
+                          setEditRecipe({ ...editRecipe, notes: e.target.value })
                         }
                         className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -274,9 +299,9 @@ export default function AddRecipeBtn() {
               <ModalFooter>
                 <Button
                   onPress={() => {
-                    setRecipe({
-                      ...recipe,
-                      totalTime: recipe.cookTime + recipe.prepTime,
+                    setEditRecipe({
+                      ...editRecipe,
+                      totalTime: editRecipe.cookTime + editRecipe.prepTime,
                     });
                     submitRecipe();
                     onClose;

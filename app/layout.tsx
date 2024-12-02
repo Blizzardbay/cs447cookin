@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {inter} from '@/app/fonts/fonts';
 import localFont from "next/font/local";
+import { Providers } from "./providers";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -29,7 +30,9 @@ export default function RootLayout({
       <body
         className={`${inter.className} antialiased`}
       >
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

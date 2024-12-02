@@ -4,13 +4,21 @@ const nextConfig = {
     POSTGRES_URL: process.env.POSTGRES_URL,
   },
   images: {
-      localPatterns: [
-        {
-          pathname: '/assets/images/**',
-          search: '',
-        },
-      ],
-    },
-}
+    formats: ["image/avif", "image/webp"],
+    localPatterns: [
+      {
+        pathname: "/assets/images/**",
+        search: "",
+      },
+    ],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "assets.vercel.com",
+        port: "",
+        pathname: "/image/upload/**",
+      }
+    ],
+  },
+};
 export default nextConfig;
-

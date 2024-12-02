@@ -1,31 +1,37 @@
-import Image, { StaticImageData } from "next/image"
-import { IoCreateOutline } from "react-icons/io5"
-import DeleteRecipeBtn from "./deleteRecipeBtn"
-
+import { StaticImageData } from "next/image";
+import DeleteRecipeBtn from "./deleteRecipeBtn";
+import ModifyRecipeBtn from "./modifyRecipeBtn";
+import ViewRecipeBtn from "./viewRecipeBtn";
 
 type RecipeCardProps = {
-    title: string;
-    image: StaticImageData;
-}
+  recipe: {
+    image?: string;
+    title?: string;
+    cuisine?: string;
+    foodType?: string;
+    cost?: string;
+    ingredients?: string[];
+    directions?: string[];
+    servings?: number;
+    prepTime?: number;
+    cookTime?: number;
+    totalTime?: number;
+    favorite?: boolean;
+    notes?: string;
+  };
+};
 
-export default function RecipeCard({ title, image }: RecipeCardProps) {
-    return (
-        <div className="w-[100%] h-[288px] p-2 flex flex-col gap-2 border-2 border-black rounded-lg">
-            <div className="h-[85%] relative">
-                <Image
-                    src={image}
-                    alt={title}
-                    className="object-cover w-full h-full border-2 border-black rounded-lg brightness-[55%] "
-                />
-                <p className="absolute top-[45%] right-[35%] text-xl text-white">View Recipe</p>
-                <div className="absolute top-2 right-2">
-                    <DeleteRecipeBtn></DeleteRecipeBtn>
-                </div>
-            </div>
-            <div className="h-full flex flex-row justify-between items-center">
-                <h3 className="text-md xl:text-lg font-semibold">{title}</h3>
-                <IoCreateOutline size={32} color="black" />
-            </div>
-        </div>
-    )
+export default function RecipeCard({ recipe }: RecipeCardProps) {
+  return (
+    <div className="w-[100%] h-[288px] p-2 flex flex-col gap-2 border-2 border-black rounded-lg">
+      <div className="h-[85%] relative">
+        <ViewRecipeBtn recipe={recipe}/>
+        <ModifyRecipeBtn recipe={recipe} style="absolute top-2 right-0" />
+      </div>
+      <div className="h-min flex flex-row justify-between items-center">
+        <h3 className="text-md xl:text-lg font-semibold">{recipe.title}</h3>
+        <DeleteRecipeBtn recipe={recipe} />
+      </div>
+    </div>
+  );
 }
