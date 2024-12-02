@@ -10,11 +10,11 @@ export default async function handler(req, res) {
 	}
 	
 	if(action === "CREATE") {
-		res.setHeader('Set-Cookie', `LoggedInUser=${username}; Path=/; HttpOnly; Secure; SameSite=Strict`);
+		res.setHeader('Set-Cookie', `LoggedInUser=${JSON.stringify(username)}; Path=/; HttpOnly; Secure; SameSite=Strict`);
 		return res.status(200).json({ success: true });
 	}
 	if(action === "DESTROY") {
-		res.setHeader('Set-Cookie', 'LoggedInUser=${username}; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
+		res.setHeader('Set-Cookie', 'LoggedInUser=${JSON.stringify(username)}; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 GMT');
 		return res.status(200).json({ success: true });
 	}
 
