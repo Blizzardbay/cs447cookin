@@ -13,6 +13,7 @@ export default function Page() {
 	
 	const createAccount = async (data) => {
 		data.preventDefault();
+		
 		const result = await insertUserData(new FormData(data.target));
 		
 		if(result.success == true) {

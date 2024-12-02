@@ -53,6 +53,82 @@ export async function createTables() {
 		//await sql`ROLLBACK`;
 		//return Response.json({ error }, { status: 500 });
 	//}
+	/*try {
+		await sql`BEGIN`;
+		await sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+		await sql`
+		 CREATE TABLE IF NOT EXISTS favorite_table (
+		   pid UUID DEFAULT uuid_generate_v4() NOT NULL PRIMARY KEY,
+		   username VARCHAR(255) NOT NULL,
+		   recipe_title TEXT NOT NULL
+		 );
+		 `;
+		await sql`COMMIT`;
+		
+		return Response.json("ALL GOOD");
+	}
+	catch (error) {
+		await sql`ROLLBACK`;
+		return Response.json({ error }, { status: 500 });
+	}*/
+}
+export async function toggleFavorite(toggle, user, recipe) {
+	if(toggle === true) {
+		return newFavorite(user, recipe);
+	}
+	else {
+		return removeFavorite(user, recipe);
+	}
+}
+export async function isFavorite(user, recipe) {
+	if(user === null) {
+		return false;
+	}
+	else {
+		const result = await sql`SELECT * FROM favorite_table WHERE username=${user} AND recipe_title=${recipe};`;
+		
+		if(result) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+}
+export async function getFavorites(user) {
+	try {
+		const ret = await sql`SELECT * FROM favorite_table WHERE username=${user};`;
+		
+		return { success: true, redirectUrl: "/mainpage", error: "", data: ret};
+	}
+	catch (error) {
+		console.error(Response.json({ error }, { status: 500 }));
+		return { success: false, redirectUrl: "/mainpage", error: "SQL Error: Please contact website administrator."};
+	}
+}
+export async function newFavorite(user, recipe) {
+	try {
+		await sql`
+				INSERT INTO favorite_table (username, recipe_title)
+				VALUES (${user}, ${recipe})
+				ON CONFLICT (pid) DO NOTHING;
+			`;
+		return { success: true, redirectUrl: "/mainpage", error: ""};
+	}
+	catch (error) {
+		return { success: false, redirectUrl: "/mainpage", error: "Unable to favorite. Please contact website administrator."};
+	}
+}
+export async function removeFavorite(user, recipe) {
+	try {
+		await sql`DELETE FROM favorite_table WHERE username=${user} AND recipe_title=${recipe};`;
+			
+		return { success: true, redirectUrl: "/mainpage", error: ""};
+	}
+	catch (error) {
+		return { success: false, redirectUrl: "/mainpage", error: "Unable to delete favorite. Please contact website administrator."};
+	}
 }
 export async function insertRecipe(formData: FormData, creator) {
 	try {
@@ -148,26 +224,45 @@ export async function insertUserData(formData: FormData) {
 	try {
 		const temp_date = new Date()
 		if(formData.get("username") !== "" && formData.get("username") !== null) {
-			if(formData.get("password") !== "" && formData.get("password") !== null) {
-				const username = formData.get("username")!.toString();
-		
-				const password = await bcrypt.hash(formData.get("password"), 10);
-				
-				const date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
-				
-				await sql`
-					INSERT INTO user_information (username, password, creation_date, astableid)
-					VALUES (${username}, ${password}, ${date}, ${0})
-					ON CONFLICT (pid) DO NOTHING;
-					`;
-				return { success: true, redirectUrl: "/mainpage", error: ""};
+			const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			
+			if(email_regex.test(formData.get("username"))) {
+				if(formData.get("password") !== "" && formData.get("password") !== null) {
+					if(formData.get("password").length >= 9) {
+						const password_regex = /((\w)*(\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\=|\+|\[|\]|\{|\}|\\|\||\;|\:|\"|\'|\,|\<|\.|\>|\/|\?)+(\w)*)+/;
+						
+						if(password_regex.test(formData.get("password"))) {
+							const username = formData.get("username")!.toString();
+			
+							const password = await bcrypt.hash(formData.get("password"), 10);
+							
+							const date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
+							
+							await sql`
+								INSERT INTO user_information (username, password, creation_date, astableid)
+								VALUES (${username}, ${password}, ${date}, ${0})
+								ON CONFLICT (pid) DO NOTHING;
+								`;
+							return { success: true, redirectUrl: "/mainpage", error: ""};
+						}
+						else {
+							return { success: false, redirectUrl: "/mainpage", error: "Invaild password. Password must contain atleast 1 special character."};
+						}
+					}
+					else {
+						return { success: false, redirectUrl: "/mainpage", error: "Invaild password. Password must be greater than 8 characters."};
+					}
+				}
+				else {
+					return { success: false, redirectUrl: "/mainpage", error: "Invaild password."};
+				}
 			}
 			else {
-				return { success: false, redirectUrl: "/mainpage", error: "Invaild password. Password must be non-null and not empty."};
+				return { success: false, redirectUrl: "/mainpage", error: "Invaild email."};
 			}
 		}
 		else {
-			return { success: false, redirectUrl: "/mainpage", error: "Invaild username. Password must be non-null and not empty."};
+			return { success: false, redirectUrl: "/mainpage", error: "Invaild email."};
 		}
 	}
 	catch (error) {
