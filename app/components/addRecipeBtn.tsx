@@ -56,7 +56,7 @@ export default function AddRecipeBtn() {
       <Button
         onClick={onOpen}
         variant="bordered"
-        className="w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium border-black text-black"
+        className="w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium text-black border-black hover:bg-black hover:text-white"
       >
         Add Recipe <IoAddCircleOutline size={32} />
       </Button>
@@ -69,7 +69,7 @@ export default function AddRecipeBtn() {
         size="2xl"
         className="w-[600px] h-fit"
         classNames={{
-          header: "text-2xl",
+          header: "text-3xl",
           closeButton: "text-black text-3xl top-2 right-2",
         }}
       >

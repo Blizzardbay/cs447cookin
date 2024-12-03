@@ -82,7 +82,8 @@ export default function ModifyRecipeBtn({
     <div>
       <Button
         onClick={onOpen}
-        className={`${style} w-fit h-min py-1 px-4 flex flex-row gap-4 justify-center items-center text-lg bg-transparent rounded-xl hover:bg-black`}
+        variant="flat"
+        className={`${style} w-fit h-9 py-1 px-4 flex flex-row gap-4 justify-center items-center text-lg bg-transparent hover:bg-black`}
       >
         <p className="text-white font-semibold">Edit</p>
         <FaRegEdit size={28} color="white" />
@@ -96,7 +97,7 @@ export default function ModifyRecipeBtn({
         size="2xl"
         className="w-[600px] h-fit"
         classNames={{
-          header: "text-2xl",
+          header: "text-3xl",
           closeButton: "text-black text-3xl top-2 right-2",
         }}
       >

@@ -32,9 +32,9 @@ export default function filterBtn() {
       <DropdownTrigger>
         <Button 
           variant="bordered" 
-          className="capitalize w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium border-black text-black"
+          className="capitalize w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium text-black border-black hover:bg-black hover:text-white"
         >
-          {selectedValue}<IoFilter size={24} />
+          {selectedValue} <IoFilter size={24} />
         </Button>
       </DropdownTrigger>
       <DropdownMenu 

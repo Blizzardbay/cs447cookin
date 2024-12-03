@@ -4,6 +4,7 @@ import { pacifico } from "@/app/fonts/fonts";
 import SideBar from "../components/sideBar";
 import RecipeGrid from "../components/recipeGrid";
 import Header from "../components/header";
+import FilterBtn from "../components/filterBtn";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -13,7 +14,7 @@ export default function Favorite() {
 
   useEffect(() => {
     try {
-      // Fetch recipes from database
+      // Fetch recipes from database (include filter)
       // Code here...
       toast.success(`Recipes fetched!`);
     } catch (error) {
@@ -32,9 +33,10 @@ export default function Favorite() {
         <Header />
         <div className="px-8 pt-4 pb-8 w-full grow flex flex-col gap-4">
           <div className="pb-4 w-full h-16 flex flex-row justify-between items-center border-b-2">
-            <h2 className={`${pacifico.className} text-3xl`}>
+            <h2 className={`${pacifico.className} text-4xl`}>
               Favorite Recipes
             </h2>
+            <FilterBtn/>
           </div>
           <RecipeGrid recipes={recipes}></RecipeGrid>
         </div>

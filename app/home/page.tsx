@@ -52,6 +52,126 @@ export default function Home() {
     {
       image: "",
       title: "Grilled Cheese Sandwich",
+      cuisine: "American",
+      foodType: "Quick & Easy",
+      cost: "Low",
+      ingredients: ["Bread", "Cheese", "Butter"],
+      directions: ["butter bread", "add cheese", "grill"],
+      servings: 3,
+      prepTime: 2,
+      cookTime: 10,
+      totalTime: 12,
+      favorite: false,
+      notes: "this is really good!",
+    },
+    {
+      image: "",
+      title: "Grilled Cheese Sandwich",
+      cuisine: "American",
+      foodType: "Quick & Easy",
+      cost: "Low",
+      ingredients: ["Bread", "Cheese", "Butter"],
+      directions: ["butter bread", "add cheese", "grill"],
+      servings: 3,
+      prepTime: 2,
+      cookTime: 10,
+      totalTime: 12,
+      favorite: false,
+      notes: "this is really good!",
+    },
+    {
+      image: "",
+      title: "Grilled Cheese Sandwich",
+      cuisine: "American",
+      foodType: "Quick & Easy",
+      cost: "Low",
+      ingredients: ["Bread", "Cheese", "Butter"],
+      directions: ["butter bread", "add cheese", "grill"],
+      servings: 3,
+      prepTime: 2,
+      cookTime: 10,
+      totalTime: 12,
+      favorite: false,
+      notes: "this is really good!",
+    },
+    {
+      image: "",
+      title: "Grilled Cheese Sandwich",
+      cuisine: "American",
+      foodType: "Quick & Easy",
+      cost: "Low",
+      ingredients: ["Bread", "Cheese", "Butter"],
+      directions: ["butter bread", "add cheese", "grill"],
+      servings: 3,
+      prepTime: 2,
+      cookTime: 10,
+      totalTime: 12,
+      favorite: false,
+      notes: "this is really good!",
+    },
+    {
+      image: "",
+      title: "Grilled Cheese Sandwich",
+      cuisine: "American",
+      foodType: "Quick & Easy",
+      cost: "Low",
+      ingredients: ["Bread", "Cheese", "Butter"],
+      directions: ["butter bread", "add cheese", "grill"],
+      servings: 3,
+      prepTime: 2,
+      cookTime: 10,
+      totalTime: 12,
+      favorite: false,
+      notes: "this is really good!",
+    },
+    {
+      image: "",
+      title: "Grilled Cheese Sandwich",
+      cuisine: "American",
+      foodType: "Quick & Easy",
+      cost: "Low",
+      ingredients: ["Bread", "Cheese", "Butter"],
+      directions: ["butter bread", "add cheese", "grill"],
+      servings: 3,
+      prepTime: 2,
+      cookTime: 10,
+      totalTime: 12,
+      favorite: false,
+      notes: "this is really good!",
+    },
+    {
+      image: "",
+      title: "Grilled Cheese Sandwich",
+      cuisine: "American",
+      foodType: "Quick & Easy",
+      cost: "Low",
+      ingredients: ["Bread", "Cheese", "Butter"],
+      directions: ["butter bread", "add cheese", "grill"],
+      servings: 3,
+      prepTime: 2,
+      cookTime: 10,
+      totalTime: 12,
+      favorite: false,
+      notes: "this is really good!",
+    },
+    {
+      image: "",
+      title: "Grilled Cheese Sandwich",
+      cuisine: "American",
+      foodType: "Quick & Easy",
+      cost: "Low",
+      ingredients: ["Bread", "Cheese", "Butter"],
+      directions: ["butter bread", "add cheese", "grill"],
+      servings: 3,
+      prepTime: 2,
+      cookTime: 10,
+      totalTime: 12,
+      favorite: false,
+      notes: "this is really good!",
+    },
+    {
+      image: "",
+      title: "Grilled Cheese Sandwich",
       cuisine: "",
       foodType: "",
       cost: "",
@@ -98,7 +218,7 @@ export default function Home() {
 
   useEffect(() => {
     try {
-      // Fetch recipes from database
+      // Fetch recipes from database (include filter)
       // Code here...
       toast.success(`Recipes fetched!`);
     } catch (error) {
@@ -117,9 +237,9 @@ export default function Home() {
       <SideBar></SideBar>
       <div className="w-full h-full flex flex-col">
         <Header />
-        <div className="px-8 pt-4 pb-8 w-full grow flex flex-col gap-4">
-          <div className="pb-4 w-full h-16 flex flex-row justify-between items-center border-b-2">
-            <h2 className={`${pacifico.className} text-3xl`}>Recipes</h2>
+        <div className="px-8 my-4 w-full h-full flex flex-col gap-4">
+          <div className="pb-4 w-full h-min flex flex-row justify-between items-center border-b-2">
+            <h2 className={`${pacifico.className} text-4xl`}>Recipes</h2>
             <div className="flex flex-row gap-4">
               <FilterBtn />
               <AddRecipeBtn />

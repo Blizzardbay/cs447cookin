@@ -30,9 +30,10 @@ type RecipeCardProps = {
       favorite?: boolean;
       notes?: string;
     };
+    style?: string;
   };
 
-export default function DeleteRecipeBtn({ recipe }: RecipeCardProps) {
+export default function DeleteRecipeBtn({ recipe, style }: RecipeCardProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
   // Delete recipe from database
@@ -54,8 +55,8 @@ export default function DeleteRecipeBtn({ recipe }: RecipeCardProps) {
 
   return (
     <div>
-      <Button onClick={onOpen} size="sm" variant="light" className="">
-        <IoCloseOutline size={36} color="black" />
+      <Button onClick={onOpen} size="sm" variant="flat" className={`${style} w-fit h-min bg-transparent hover:bg-black`}>
+        <IoCloseOutline size={36} color="white" />
       </Button>
       <Modal
         isOpen={isOpen}
@@ -66,7 +67,7 @@ export default function DeleteRecipeBtn({ recipe }: RecipeCardProps) {
         size="2xl"
         className="w-[600px] h-fit"
         classNames={{
-          header: "text-2xl",
+          header: "text-3xl",
           closeButton: "text-black text-3xl top-2 right-2",
         }}
       >

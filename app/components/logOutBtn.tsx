@@ -1,4 +1,4 @@
-import { IoPersonOutline } from "react-icons/io5";
+import { IoLogInOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -15,30 +15,30 @@ import {
 
 // TODO: Delete account from database
 
-export default function DeleteAccountBtn() {
+export default function LogOutBtn() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
   // Delete account from database
   // If you remove this function go to line 68 and remove the function from the Button
-  const deleteAccount = async () => {
-    // Delete recipe from database
+  const logOutAccount = async () => {
+    // Log user out of account
       try {
         // Add delete recipe function here (use title variabble to query recipe)
         // Code here...
-        toast.success(`Account has been deleted!`);
+        toast.success(`Account has logged out!`);
       } catch (error) {
-        toast.error(`Error deleting account!`);
+        toast.error(`Error logging out account!`);
         console.error(`Error deleting recipe: ${error}`);
       } finally {
         // Debug message
-        console.log(`Deleting account!`);
+        console.log(`Logged out of account!`);
       }
   };
 
   return (
     <div>
-      <Button onClick={onOpen} color="danger" variant="bordered" size="md" startContent={<IoPersonOutline size={24} />}  className="w-fit h-min py-1 px-4 flex flex-row gap-4 justify-center items-center text-lg hover:bg-[#F31260] hover:text-white">
-        Delete Account
+      <Button onClick={onOpen} color="default" variant="bordered" size="md" startContent={<IoLogInOutline size={28} />}  className="w-fit h-min py-1 px-4 flex flex-row gap-4 justify-center items-center text-lg text-start text-black border-black hover:bg-black hover:text-white">
+        Log Out
       </Button>
       <Modal
         isOpen={isOpen}
@@ -59,17 +59,17 @@ export default function DeleteAccountBtn() {
               <ModalHeader
                 className={`${pacifico.className} flex flex-col gap-1`}
               >
-                Delete Account
+                Log Out Account
               </ModalHeader>
               <ModalBody>
                 <p className="font-medium">
-                  Are you sure you want to delete your account?
+                  Are you sure you want to log out your account?
                 </p>
               </ModalBody>
               <ModalFooter>
                 <Button
                   onPress={() => {
-                    deleteAccount();
+                    logOutAccount();
                     onClose;
                   }}
                   className="text-white bg-black"

@@ -72,7 +72,7 @@ export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
           height={400}
           className="object-cover w-full h-full bg-black brightness-[70%] hover:brightness-[55%]"
         />
-        <p className="absolute top-[45%] right-[35%] text-xl text-white">
+        <p className="absolute top-[45%] right-[35%] text-xl text-white pointer-events-none">
           View Recipe
         </p>
       </Button>
@@ -85,7 +85,7 @@ export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
         size="2xl"
         className="w-[600px] h-fit"
         classNames={{
-          header: "text-2xl",
+          header: "text-3xl",
           closeButton: "text-black text-3xl top-2 right-2",
         }}
       >
@@ -185,7 +185,7 @@ export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
                       <p>{recipe.totalTime} minutes</p>
                     </div>
                   </div>
-                  <div className="pt-3 flex flex-col gap-2 border-t-1 border-black">
+                  <div className="py-3 flex flex-col gap-2 border-y-1 border-black">
                     <h4 className="font-semibold">Notes:</h4>
                     <p>
                       {recipe.notes
