@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {inter} from '@/app/fonts/fonts';
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -31,6 +32,7 @@ export default function RootLayout({
         className={`${inter.className} antialiased`}
       >
         <Providers>
+          <Toaster position="bottom-right"/>
           {children}
         </Providers>
       </body>

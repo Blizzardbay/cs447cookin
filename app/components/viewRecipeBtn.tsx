@@ -1,8 +1,9 @@
-import Image, { StaticImageData } from "next/image";
-import { useEffect, useState } from "react";
+import Image from "next/image";
 import { pacifico } from "@/app/fonts/fonts";
 import { IoHeartOutline, IoHeart } from "react-icons/io5";
 import defaultImage from "../assets/images/defaultImage.png";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import {
   Modal,
   ModalContent,
@@ -37,20 +38,26 @@ type RecipeCardProps = {
 export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
   const [isFavorite, setIsFavorite] = useState(false); // State for favorite recipe
-  
+
   // Add favorite recipe to database
-  useEffect(() => {
+  const addFavorite = async () => {
     try {
       // Add favorite recipe to database
       // Code here...
+      toast.success(
+        !isFavorite
+          ? `${recipe.title} has been added to favorites!`
+          : `${recipe.title} has been removed from favorites!`
+      );
     } catch (error) {
+      toast.error(`Error adding favorite recipe!`);
       console.error(`Error adding favorite recipe: ${error}`);
     } finally {
+      setIsFavorite(!isFavorite);
       // Debug message
-      console.log(`Adding favorite recipe: ${isFavorite}`);
+      console.log(`Adding favorite recipe: ${recipe.favorite}`);
     }
-    
-  }, [isFavorite]);
+  };
 
   return (
     <div className="w-full h-full ">
@@ -62,7 +69,7 @@ export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
       >
         <Image
           // Create file path to database image (change the require() path)
-          src={recipe.image ? require(`${recipe.image}`) : defaultImage}
+          src={recipe.image ? recipe.image : defaultImage}
           alt={recipe.title ? recipe.title : "Recipe Image"}
           width={600}
           height={400}
@@ -78,6 +85,7 @@ export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
         placement="center"
         scrollBehavior="outside"
         radius="lg"
+        size="2xl"
         className="w-[600px] h-fit"
         classNames={{
           header: "text-2xl",
@@ -87,20 +95,27 @@ export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
         <ModalContent>
           {(onClose) => (
             <>
-                <ModalHeader
+              <ModalHeader
                 className={`${pacifico.className} flex flex-row gap-4`}
-                >
+              >
                 {recipe.title}
-                <Button onPress={() => setIsFavorite(!isFavorite)} size="sm" className="bg-transparent">
+                <Button
+                  onPress={() => {
+                    setIsFavorite(!isFavorite);
+                    addFavorite();
+                  }}
+                  size="sm"
+                  className="bg-transparent"
+                >
                   {isFavorite ? (
-                  <IoHeart size={32} color="red" />
+                    <IoHeart size={32} color="red" />
                   ) : (
-                  <IoHeartOutline size={32} color="black" />
+                    <IoHeartOutline size={32} color="black" />
                   )}
                 </Button>
-                </ModalHeader>
+              </ModalHeader>
               <ModalBody>
-                <div className="w-full h-[400px] border-2 border-black rounded-lg">
+                <div className="w-full h-[324px] border-2 border-black rounded-lg">
                   <Image
                     src={recipe.image || defaultImage}
                     alt={recipe.title || "Recipe Image"}
@@ -111,36 +126,48 @@ export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
                   <div className="grid grid-cols-3 place-content-around text-center">
                     <div className="flex flex-col gap-2">
                       <h4 className="font-semibold">Cuisine</h4>
-                      <p>{recipe.cuisine}</p>
+                      <p>{recipe.cuisine || "None"}</p>
                     </div>
                     <div className="flex flex-col gap-2">
                       <h4 className="font-semibold">Food Type</h4>
-                      <p>{recipe.foodType}</p>
+                      <p>{recipe.foodType || "None"}</p>
                     </div>
                     <div className="flex flex-col gap-2">
                       <h4 className="font-semibold">Cost</h4>
-                      <p>{recipe.cost}</p>
+                      <p>{recipe.cost || "None"}</p>
                     </div>
                   </div>
                   <div className="pt-3 flex flex-col gap-2 border-t-1 border-black">
                     <h4 className="font-semibold">Ingredients</h4>
-                    <ul className="ml-8 font-semibold text-[#3D3D3D] list-disc">
-                      {recipe.ingredients?.map((ingredient, index) => (
-                        <li key={index}>{ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}</li>
-                      ))}
+                    <ul className="ml-4 font-semibold text-[#3D3D3D] list-disc">
+                      {recipe.ingredients && recipe.ingredients.length > 0 ? (
+                        recipe.ingredients.map((ingredient, index) => (
+                          <li className="ml-4" key={index}>
+                            {ingredient.charAt(0).toUpperCase() +
+                              ingredient.slice(1)}
+                          </li>
+                        ))
+                      ) : (
+                        <p>None</p>
+                      )}
                     </ul>
                   </div>
                   <div className="pt-3 flex flex-col gap-2 border-t-1 border-black">
                     <h4 className="font-semibold">Directions:</h4>
                     <ol className="ml-4 text-[#3D3D3D]">
-                      {recipe.directions?.map((direction, index) => (
-                        <div key={index} className="mt-2 flex flex-col gap-1">
-                          <p className="font-semibold">Step {index + 1}</p>
-                          <li className="font-normal">
-                            {direction.charAt(0).toUpperCase() + direction.slice(1)}
-                          </li>
-                        </div>
-                      ))}
+                      {recipe.directions && recipe.directions.length > 0 ? (
+                        recipe.directions?.map((direction, index) => (
+                          <div key={index} className="mt-2 flex flex-col gap-1">
+                            <p className="font-semibold">Step {index + 1}</p>
+                            <li className="font-normal">
+                              {direction.charAt(0).toUpperCase() +
+                                direction.slice(1)}
+                            </li>
+                          </div>
+                        ))
+                      ) : (
+                        <p>None</p>
+                      )}
                     </ol>
                   </div>
                   <div className="pt-3 flex flex-col gap-2 border-t-1 border-black [&>div]:justify-between [&>div]:px-2 [&>div>h4]:text-lg [&>div>h4]:font-semibold [&>div>p]:text-[#3D3D3D] [&>div>p]:font-medium">
@@ -163,7 +190,12 @@ export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
                   </div>
                   <div className="pt-3 flex flex-col gap-2 border-t-1 border-black">
                     <h4 className="font-semibold">Notes:</h4>
-                    <p>{recipe.notes ? recipe.notes.charAt(0).toUpperCase() + recipe.notes.slice(1) : "None"}</p>
+                    <p>
+                      {recipe.notes
+                        ? recipe.notes.charAt(0).toUpperCase() +
+                          recipe.notes.slice(1)
+                        : "None"}
+                    </p>
                   </div>
                 </div>
               </ModalBody>

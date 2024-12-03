@@ -1,7 +1,8 @@
-import { IoCloseOutline } from "react-icons/io5";
+import { IoPersonOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+
 import {
   Modal,
   ModalContent,
@@ -12,50 +13,32 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-// TODO: Delete recipe from database
+// TODO: Delete account from database
 
-type RecipeCardProps = {
-    recipe: {
-      image?: string;
-      title?: string;
-      cuisine?: string;
-      foodType?: string;
-      cost?: string;
-      ingredients?: string[];
-      directions?: string[];
-      servings?: number;
-      prepTime?: number;
-      cookTime?: number;
-      totalTime?: number;
-      favorite?: boolean;
-      notes?: string;
-    };
-  };
-
-export default function DeleteRecipeBtn({ recipe }: RecipeCardProps) {
+export default function DeleteRecipeBtn() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
-  // Delete recipe from database
-  // If you remove this function go to line 87 and remove the function from the Button
-  const deleteRecipe = async () => {
+  // Delete account from database
+  // If you remove this function go to line 68 and remove the function from the Button
+  const deleteAccount = async () => {
     // Delete recipe from database
       try {
         // Add delete recipe function here (use title variabble to query recipe)
         // Code here...
-        toast.success(`${recipe.title} recipe has been deleted!`);
+        toast.success(`Account has been deleted!`);
       } catch (error) {
-        toast.error(`Error deleting recipe!`);
+        toast.error(`Error deleting account!`);
         console.error(`Error deleting recipe: ${error}`);
       } finally {
         // Debug message
-        console.log(`Deleting recipe: ${recipe.title}`);
+        console.log(`Deleting account!`);
       }
   };
 
   return (
     <div>
-      <Button onClick={onOpen} size="sm" variant="light" className="">
-        <IoCloseOutline size={36} color="black" />
+      <Button onClick={onOpen} color="danger" variant="bordered" size="md" startContent={<IoPersonOutline size={24} />}  className="w-fit h-min py-1 px-4 flex flex-row gap-4 justify-center items-center text-lg">
+        Delete Account
       </Button>
       <Modal
         isOpen={isOpen}
@@ -76,23 +59,22 @@ export default function DeleteRecipeBtn({ recipe }: RecipeCardProps) {
               <ModalHeader
                 className={`${pacifico.className} flex flex-col gap-1`}
               >
-                Delete Recipe
+                Delete Account
               </ModalHeader>
               <ModalBody>
                 <p className="font-medium">
-                  Are you sure you want to delete{" "}
-                  <span className="font-bold">{recipe.title}</span>?
+                  Are you sure you want to delete your account?
                 </p>
               </ModalBody>
               <ModalFooter>
                 <Button
                   onPress={() => {
-                    deleteRecipe();
+                    deleteAccount();
                     onClose;
                   }}
                   className="text-white bg-black"
                 >
-                  Delete Recipe
+                  Delete Account
                 </Button>
                 <Button color="danger" onPress={onClose}>
                   Close

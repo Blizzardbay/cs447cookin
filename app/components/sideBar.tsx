@@ -13,8 +13,8 @@ export default function SideBar() {
     return (
         <div className="w-24 h-full flex flex-col justify-between items-center bg-black">
             <div className="flex flex-col justify-center items-center">
-                <Link href="/" className="py-8">
-                    <Image src={profileImage} alt="Profile Icon" className="w-16 border-2 border-white rounded-full" />
+                <Link href="/profile_page" className="py-8">
+                    <Image src={profileImage} alt="Profile Icon" className="w-12 rounded-full" />
                 </Link>
                 <div className="py-4 flex flex-col gap-4 border-t-[1px] border-b-[1px] border-[#6C6C6C]">
                     <Link href="/home"><IoHomeOutline size={32} color={(path === "/home") ? "DBDBDB" : "3D3D3D"} /></Link>

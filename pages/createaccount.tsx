@@ -21,7 +21,7 @@ export default function Page() {
 		}
 		else {
 			setCreateColor("red");
-			
+
 			setCreateText(result.error);
 		}
 	};

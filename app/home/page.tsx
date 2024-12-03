@@ -1,20 +1,25 @@
 "use client";
 
-import { StaticImageData } from "next/image";
 import { useState, useEffect } from "react";
 import { pacifico } from "@/app/fonts/fonts";
 import SideBar from "../components/sideBar";
 import RecipeGrid from "../components/recipeGrid";
 import Header from "../components/header";
 import AddRecipeBtn from "../components/addRecipeBtn";
+import FilterBtn from "../components/filterBtn";
+import toast from "react-hot-toast";
 
 // TODO: Add animation for recipes
 // TODO: Add functionality to sideBar (Navigation)
 // TODO: Fix the page to view RecipeGrid
 // TODO: Handle recipe data and states (useEffect)
 
-// TODO: Create a View Recipe function (Modal)
-// TODO: Create a Modify Recipe function (Modal)
+// TODO: Create a Dropdown button next to add recipe
+
+// TODO: Remove search bar
+// TODO: Create a Profile page with delete account functionality
+// Done: Create a View Recipe function (Modal)
+// Done: Create a Modify Recipe function (Modal)
 // Done: Create a Delete recipe function (Modal)
 // Done: Create a Add Recipe function (Modal)
 // Done: Create a Favorites page
@@ -86,26 +91,35 @@ export default function Home() {
       notes: "",
     },
   ]);
-  // Search State
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    // Fetch recipes from database
+    try {
+      // Fetch recipes from database
+      // Code here...
+      toast.success(`Recipes fetched!`);
+    } catch (error) {
+      toast.error(`Error fetching recipes!`);
+      console.error(`Error fetching recipes: ${error}`);
+    } finally {
+      // Debug message
+      console.log(`Fetching recipes: ${recipes}`);
+    }
+  }, [recipes]);
 
-    // Debug message
-    console.log(`Fetching recipes: ${recipes}`);
-    console.log(`Search input: ${search}`);
-  }, [search, recipes]);
+  
 
   return (
     <div className="h-screen min-w-[768px] w-full flex items-center overflow-hidden">
       <SideBar></SideBar>
       <div className="w-full h-full flex flex-col">
-        <Header search={search} setSearch={setSearch}></Header>
+        <Header />
         <div className="px-8 pt-4 pb-8 w-full grow flex flex-col gap-4">
           <div className="pb-4 w-full h-16 flex flex-row justify-between items-center border-b-2">
             <h2 className={`${pacifico.className} text-3xl`}>Recipes</h2>
-            <AddRecipeBtn></AddRecipeBtn>
+            <div className="flex flex-row gap-4">
+              <FilterBtn />
+              <AddRecipeBtn />
+            </div>
           </div>
           <RecipeGrid recipes={recipes}></RecipeGrid>
         </div>

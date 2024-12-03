@@ -1,8 +1,8 @@
-import { StaticImageData } from "next/image";
 import { pacifico } from "@/app/fonts/fonts";
 import { FaRegEdit } from "react-icons/fa";
 import Form from "next/form";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import {
   Modal,
   ModalContent,
@@ -37,7 +37,10 @@ type RecipeCardStyle = {
   style: string;
 };
 
-export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & RecipeCardStyle) {
+export default function ModifyRecipeBtn({
+  recipe,
+  style,
+}: RecipeCardProps & RecipeCardStyle) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
   const [editRecipe, setEditRecipe] = useState({
@@ -58,15 +61,21 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
   // Add edit recipe to database
   // If you remove this function go to line 305 and remove the function from Button
   const submitRecipe = async () => {
-      try {
-        // Add editRecipe function here (use editRecipe variable to add editRecipe properties)
-        // Code here...
-      } catch (error) {
-        console.error(`Error adding editRecipe: ${error}`);
-      } finally {
-        // Debug message
-        console.log(`Fetching recipes: ${JSON.stringify(editRecipe)}`);
-      }
+    try {
+      // Add editRecipe function here (use editRecipe variable to add editRecipe properties)
+      // Code here...
+      toast.success(
+        `${
+          editRecipe.title ? editRecipe.title : recipe.title
+        } recipe has been edited!`
+      );
+    } catch (error) {
+      toast.error(`Error editing recipe!`);
+      console.error(`Error adding editRecipe: ${error}`);
+    } finally {
+      // Debug message
+      console.log(`Fetching recipes: ${JSON.stringify(editRecipe)}`);
+    }
   };
 
   return (
@@ -84,6 +93,7 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
         placement="center"
         scrollBehavior="outside"
         radius="lg"
+        size="2xl"
         className="w-[600px] h-fit"
         classNames={{
           header: "text-2xl",
@@ -108,8 +118,12 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <input
                         type="file"
                         name="image"
+                        placeholder="Enter new image"
                         onChange={(e) =>
-                          setEditRecipe({ ...editRecipe, image: e.target.value })
+                          setEditRecipe({
+                            ...editRecipe,
+                            image: e.target.value,
+                          })
                         }
                         className="w-full h-10 px-2 m-auto text-center border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -119,11 +133,12 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <input
                         type="text"
                         name="title"
-                        placeholder={
-                          recipe.title || "Enter the title of your editRecipe"
-                        }
+                        value={recipe.title || ""}
                         onChange={(e) =>
-                          setEditRecipe({ ...editRecipe, title: e.target.value })
+                          setEditRecipe({
+                            ...editRecipe,
+                            title: e.target.value,
+                          })
                         }
                         className="w-full h-10 px-3 border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -133,9 +148,12 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <select
                         name="cuisine"
                         id="cuisine"
-                        defaultValue={"default"}
+                        defaultValue={recipe.cuisine || "default"}
                         onChange={(e) =>
-                          setEditRecipe({ ...editRecipe, cuisine: e.target.value })
+                          setEditRecipe({
+                            ...editRecipe,
+                            cuisine: e.target.value,
+                          })
                         }
                         className="w-full h-10 border-[1px] border-[#808080] rounded-md truncate"
                       >
@@ -159,9 +177,12 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <select
                         name="foodType"
                         id="foodType"
-                        defaultValue={"default"}
+                        defaultValue={recipe.foodType || "default"}
                         onChange={(e) =>
-                          setEditRecipe({ ...editRecipe, foodType: e.target.value })
+                          setEditRecipe({
+                            ...editRecipe,
+                            foodType: e.target.value,
+                          })
                         }
                         className="w-full h-10 border-[1px] border-[#808080] rounded-md truncate"
                       >
@@ -187,7 +208,7 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <select
                         name="cost"
                         id="cost"
-                        defaultValue={"default"}
+                        defaultValue={recipe.cost || "default"}
                         onChange={(e) =>
                           setEditRecipe({ ...editRecipe, cost: e.target.value })
                         }
@@ -205,12 +226,15 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <label htmlFor="ingredients">Ingredients</label>
                       <textarea
                         name="ingredients"
-                        placeholder={
+                        value={
                           recipe.ingredients?.join(", ") ||
                           "Enter the ingredients of your editRecipe"
                         }
                         onChange={(e) =>
-                          setEditRecipe({ ...editRecipe, ingredients: e.target.value })
+                          setEditRecipe({
+                            ...editRecipe,
+                            ingredients: e.target.value,
+                          })
                         }
                         className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -219,12 +243,15 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <label htmlFor="instructions">Instructions</label>
                       <textarea
                         name="instructions"
-                        placeholder={
+                        value={
                           recipe.directions?.join(", ") ||
                           "Enter the instructions of your editRecipe"
                         }
                         onChange={(e) =>
-                          setEditRecipe({ ...editRecipe, directions: e.target.value })
+                          setEditRecipe({
+                            ...editRecipe,
+                            directions: e.target.value,
+                          })
                         }
                         className="w-full h-20 px-3 border-[1px] border-[#808080] rounded-md truncate"
                       />
@@ -234,7 +261,7 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <input
                         type="number"
                         name="servings"
-                        placeholder={recipe.servings?.toString() || "e.g. 8"}
+                        value={recipe.servings?.toString() || "e.g. 8"}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -249,7 +276,7 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <input
                         type="number"
                         name="prepTime"
-                        placeholder={recipe.prepTime?.toString() || "e.g. 10"}
+                        value={recipe.prepTime?.toString() || "e.g. 10"}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -264,7 +291,7 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <input
                         type="number"
                         name="cookTime"
-                        placeholder={recipe.cookTime?.toString() || "e.g. 15"}
+                        value={recipe.cookTime?.toString() || "e.g. 15"}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -284,11 +311,14 @@ export default function ModifyRecipeBtn({ recipe, style }: RecipeCardProps & Rec
                       <label htmlFor="notes">Notes (Optional)</label>
                       <textarea
                         name="notes"
-                        placeholder={
+                        value={
                           recipe.notes || "Enter notes for your editRecipe"
                         }
                         onChange={(e) =>
-                          setEditRecipe({ ...editRecipe, notes: e.target.value })
+                          setEditRecipe({
+                            ...editRecipe,
+                            notes: e.target.value,
+                          })
                         }
                         className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
                       />

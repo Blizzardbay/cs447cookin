@@ -2,6 +2,7 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
 import Form from "next/form";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import {
   Modal,
   ModalContent,
@@ -40,7 +41,9 @@ export default function AddRecipeBtn() {
       try {
         // Add recipe function here (use recipe variable to add recipe properties)
         // Code here...
+        toast.success(`${recipe.title} recipe added successfully!`);
       } catch (error) {
+        toast.error(`Error adding recipe!`);
         console.error(`Error adding recipe: ${error}`);
       } finally {
         // Debug message
@@ -52,7 +55,8 @@ export default function AddRecipeBtn() {
     <div>
       <Button
         onClick={onOpen}
-        className="w-fit h-min py-1 px-4 flex flex-row gap-4 justify-center items-center text-lg border-2 border-black bg-white rounded-xl"
+        variant="bordered"
+        className="w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium border-black text-black"
       >
         Add Recipe <IoAddCircleOutline size={32} />
       </Button>
@@ -62,6 +66,7 @@ export default function AddRecipeBtn() {
         placement="center"
         scrollBehavior="outside"
         radius="lg"
+        size="2xl"
         className="w-[600px] h-fit"
         classNames={{
           header: "text-2xl",
