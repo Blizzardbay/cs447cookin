@@ -133,7 +133,8 @@ export default function ModifyRecipeBtn({
                       <input
                         type="text"
                         name="title"
-                        value={recipe.title || ""}
+                        defaultValue={recipe.title}
+                        placeholder="Enter the title of your recipe"
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -226,10 +227,10 @@ export default function ModifyRecipeBtn({
                       <label htmlFor="ingredients">Ingredients</label>
                       <textarea
                         name="ingredients"
-                        value={
-                          recipe.ingredients?.join(", ") ||
-                          "Enter the ingredients of your editRecipe"
+                        defaultValue={
+                          recipe.ingredients?.join(", ")
                         }
+                        placeholder="Enter the ingredients of your recipe"
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -243,10 +244,8 @@ export default function ModifyRecipeBtn({
                       <label htmlFor="instructions">Instructions</label>
                       <textarea
                         name="instructions"
-                        value={
-                          recipe.directions?.join(", ") ||
-                          "Enter the instructions of your editRecipe"
-                        }
+                        defaultValue={recipe.directions?.join(", ")}
+                        placeholder="Enter the instructions of your recipe"
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -261,7 +260,7 @@ export default function ModifyRecipeBtn({
                       <input
                         type="number"
                         name="servings"
-                        value={recipe.servings?.toString() || "e.g. 8"}
+                        defaultValue={recipe.servings}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -276,7 +275,7 @@ export default function ModifyRecipeBtn({
                       <input
                         type="number"
                         name="prepTime"
-                        value={recipe.prepTime?.toString() || "e.g. 10"}
+                        defaultValue={recipe.prepTime}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -291,7 +290,7 @@ export default function ModifyRecipeBtn({
                       <input
                         type="number"
                         name="cookTime"
-                        value={recipe.cookTime?.toString() || "e.g. 15"}
+                        defaultValue={recipe.cookTime}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -311,9 +310,8 @@ export default function ModifyRecipeBtn({
                       <label htmlFor="notes">Notes (Optional)</label>
                       <textarea
                         name="notes"
-                        value={
-                          recipe.notes || "Enter notes for your editRecipe"
-                        }
+                        defaultValue={recipe.notes}
+                        placeholder="Enter notes for your recipe"
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,

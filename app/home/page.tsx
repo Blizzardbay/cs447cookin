@@ -1,23 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { pacifico } from "@/app/fonts/fonts";
 import SideBar from "../components/sideBar";
 import RecipeGrid from "../components/recipeGrid";
 import Header from "../components/header";
 import AddRecipeBtn from "../components/addRecipeBtn";
 import FilterBtn from "../components/filterBtn";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
-// TODO: Add animation for recipes
-// TODO: Add functionality to sideBar (Navigation)
-// TODO: Fix the page to view RecipeGrid
+
 // TODO: Handle recipe data and states (useEffect)
+// TODO: Delete recipes from initial state
 
-// TODO: Create a Dropdown button next to add recipe
+// TODO: Add animation for recipes
+// TODO: Fix the page to view RecipeGrid
+// TODO: Finish View Recipe Modal (ViewRecipeBtn)
+// TODO: Add favorite recipe functionality (viewRecipeBtn)
 
-// TODO: Remove search bar
-// TODO: Create a Profile page with delete account functionality
+// Done: Add functionality to sideBar (Navigation)
+// Done: Create a Dropdown button next to add recipe
+// Done: Remove search bar
+// Done: Create a Profile page with delete account functionality
 // Done: Create a View Recipe function (Modal)
 // Done: Create a Modify Recipe function (Modal)
 // Done: Create a Delete recipe function (Modal)

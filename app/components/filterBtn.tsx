@@ -1,6 +1,6 @@
-import { IoSearch, IoFilter } from "react-icons/io5";
-import { useState, useMemo, useEffect } from "react";
+import { IoFilter } from "react-icons/io5";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+import { useState, useMemo, useEffect } from "react";
 import toast from "react-hot-toast";
 
 export default function filterBtn() {
@@ -12,11 +12,12 @@ export default function filterBtn() {
   );
 
    // Filter recipes from database
+   // If you remove this function go to line 48 and remove the function from the onSelectionChange
   const filterRecipes = async (keys) => {
     try {
       // Filter recipes from database
       // Code here...
-      toast.success(`${Array.from(keys).join(", ")} recipes filter!`);
+      toast.success(`Filter ${Array.from(keys).join(", ").toLowerCase()} recipes!`);
     } catch (error) {
       toast.error(`Error filtering recipes!`);
       console.error(`Error filtering recipes: ${error}`);

@@ -32,9 +32,6 @@ type RecipeCardProps = {
   };
 };
 
-// TODO: Finsish View Recipe Modal
-// TODO: Add favorite recipe functionality
-
 export default function ViewRecipeBtn({ recipe }: RecipeCardProps) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
   const [isFavorite, setIsFavorite] = useState(false); // State for favorite recipe
