@@ -2,6 +2,7 @@ import { IoLogInOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
 
 import {
   Modal,
@@ -25,6 +26,8 @@ export default function LogOutBtn() {
       try {
         // Add delete recipe function here (use title variabble to query recipe)
         // Code here...
+		const result = await LogOut();
+		
         toast.success(`Account has logged out!`);
       } catch (error) {
         toast.error(`Error logging out account!`);

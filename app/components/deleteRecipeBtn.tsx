@@ -36,13 +36,10 @@ type RecipeCardProps = {
     style?: string;
   };
 
-<<<<<<< Updated upstream
-export default function DeleteRecipeBtn({ recipe, style }: RecipeCardProps) {
-=======
 export default function DeleteRecipeBtn({ recipe, update_main }) {
->>>>>>> Stashed changes
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
   const router = useRouter();
+  const style = "";
   // Delete recipe from database
   // If you remove this function go to line 87 and remove the function from the Button
   const deleteRecipe1 = async () => {

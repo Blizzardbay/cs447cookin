@@ -183,12 +183,8 @@ const router = useRouter();
                       <input
                         type="text"
                         name="title"
-<<<<<<< Updated upstream
-                        defaultValue={recipe.title}
+                        defaultValue={recipe.recipe_title}
                         placeholder="Enter the title of your recipe"
-=======
-                        value={editRecipe.title || ""}
->>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -281,14 +277,9 @@ const router = useRouter();
                       <label htmlFor="ingredients">Ingredients</label>
                       <textarea
                         name="ingredients"
-<<<<<<< Updated upstream
                         defaultValue={
-                          recipe.ingredients?.join(", ")
-=======
-                        value={
                           Array.isArray(editRecipe.ingredients) ? (editRecipe.ingredients?.join(", ") ||
                           "Enter the ingredients of your editRecipe") : editRecipe.ingredients
->>>>>>> Stashed changes
                         }
                         placeholder="Enter the ingredients of your recipe"
                         onChange={(e) =>
@@ -304,15 +295,10 @@ const router = useRouter();
                       <label htmlFor="instructions">Instructions</label>
                       <textarea
                         name="instructions"
-<<<<<<< Updated upstream
-                        defaultValue={recipe.directions?.join(", ")}
-                        placeholder="Enter the instructions of your recipe"
-=======
-                        value={
+                        defaultValue={
 							Array.isArray(editRecipe.directions) ? (editRecipe.directions?.join(", ") ||
                           "Enter the ingredients of your editRecipe") : editRecipe.directions
                         }
->>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -327,11 +313,7 @@ const router = useRouter();
                       <input
                         type="number"
                         name="servings"
-<<<<<<< Updated upstream
-                        defaultValue={recipe.servings}
-=======
-                        value={editRecipe.servings?.toString() || "e.g. 8"}
->>>>>>> Stashed changes
+                        defaultValue={editRecipe.servings?.toString() || "e.g. 8"}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -346,11 +328,7 @@ const router = useRouter();
                       <input
                         type="number"
                         name="prepTime"
-<<<<<<< Updated upstream
-                        defaultValue={recipe.prepTime}
-=======
-                        value={editRecipe.prepTime?.toString() || "e.g. 10"}
->>>>>>> Stashed changes
+                        defaultValue={editRecipe.prepTime?.toString() || "e.g. 10"}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -365,11 +343,7 @@ const router = useRouter();
                       <input
                         type="number"
                         name="cookTime"
-<<<<<<< Updated upstream
-                        defaultValue={recipe.cookTime}
-=======
-                        value={editRecipe.cookTime?.toString() || "e.g. 15"}
->>>>>>> Stashed changes
+                        defaultValue={editRecipe.cookTime?.toString() || "e.g. 15"}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -389,14 +363,8 @@ const router = useRouter();
                       <label htmlFor="notes">Notes (Optional)</label>
                       <textarea
                         name="notes"
-<<<<<<< Updated upstream
                         defaultValue={recipe.notes}
                         placeholder="Enter notes for your recipe"
-=======
-                        value={
-                          editRecipe.notes || "Enter notes for your editRecipe"
-                        }
->>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
