@@ -42,12 +42,12 @@ export default function RecipeCard({ recipe, favorites, update, update_main }) {
 			<div className="w-[100%] h-[288px] p-2 flex flex-col gap-2 border-2 border-black rounded-lg hover:text-white hover:bg-black">
 			  <div className="h-[85%] relative">
 				<ViewRecipeBtn recipe={recipe} favorites={favorites} update={update} update_main={update_main}/>
-				<ModifyRecipeBtn recipe={recipe} style="absolute top-2 right-2" update_main={update_main}  />
+				<ModifyRecipeBtn recipe={recipe} style="absolute top-2 left-2" update_main={update_main}  />
+				<DeleteRecipeBtn recipe={recipe} style="absolute top-2 right-2" update_main={update_main} />
 			  </div>
-			  <div className="h-min flex flex-row justify-between items-center">
-				<h3 className="text-md xl:text-lg font-semibold pointer-events-none">{recipe.recipe_title}</h3>
-				<DeleteRecipeBtn recipe={recipe} update_main={update_main} />
-			  </div>
+
+				<h3 className="pl-0 text-lg xl:text-xl font-semibold pointer-events-none">{recipe.recipe_title}</h3>
+
 			</div>
 		);
 	}
@@ -57,7 +57,7 @@ export default function RecipeCard({ recipe, favorites, update, update_main }) {
         <ViewRecipeBtn recipe={recipe} favorites={favorites} update={update} update_main={update_main}/>
       </div>
       <div className="h-min flex flex-row justify-between items-center">
-        <h3 className="text-md xl:text-lg font-semibold pointer-events-none">{recipe.recipe_title}</h3>
+        <h3 className="pl-0 text-lg xl:text-xl font-semibold pointer-events-none">{recipe.recipe_title}</h3>
       </div>
     </div>
   );

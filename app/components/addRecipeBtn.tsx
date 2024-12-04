@@ -3,7 +3,14 @@ import { pacifico } from "@/app/fonts/fonts";
 import Form from "next/form";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import {
+  LogOut,
+  insertRecipe,
+  deleteRecipe,
+  GetAllRecipes,
+  toggleFavorite,
+  getFavorites,
+} from "@/app/util/data";
 import { useRouter } from "next/navigation";
 import {
   Modal,
@@ -21,7 +28,7 @@ import {
 export default function AddRecipeBtn() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
-const router = useRouter();
+  const router = useRouter();
 
   const [recipe, setRecipe] = useState({
     image: "",
@@ -42,31 +49,27 @@ const router = useRouter();
   // Add recipe to database
   // If you remove this function go to line 280 and remove the function from the Button
   const submitRecipe = async () => {
-      try {
-        // Add recipe function here (use recipe variable to add recipe properties)
-        
-		const cookie_list = document.cookie;
-		
-		const str = cookie_list.split("=");
-		
-		if(str.length >= 2) {
-			if(str[0] === "LoggedInUser") {
-				var temp = JSON.parse(JSON.stringify(recipe));
-				
-				temp.totalTime = temp.prepTime + temp.cookTime;
-				
-				const result = await insertRecipe(temp, decodeURIComponent(str[1]))
-			}
-		}
-		window.location.href = '/home';
-        toast.success(`${recipe.title} recipe added successfully!`);
-      } catch (error) {
-        toast.error(`Error adding recipe!`);
-        console.error(`Error adding recipe: ${error}`);
-      } finally {
-        // Debug message
-        //console.log(`Fetching recipes: ${JSON.stringify(recipe)}`);
+    const cookie_list = document.cookie;
+
+    const str = cookie_list.split("=");
+
+    if (str.length >= 2) {
+      if (str[0] === "LoggedInUser") {
+        var temp = JSON.parse(JSON.stringify(recipe));
+
+        temp.totalTime = temp.prepTime + temp.cookTime;
+
+        const result = await insertRecipe(temp, decodeURIComponent(str[1]));
+
+        if (result.success == true) {
+          router.push("/home");
+          window.location.href = "/home";
+          toast.success(`Recipe has been added!`);
+        } else {
+          toast.error(`Error adding recipe!`);
+        }
       }
+    }
   };
 
   return (
@@ -85,7 +88,7 @@ const router = useRouter();
         scrollBehavior="outside"
         radius="lg"
         size="2xl"
-        className="w-[600px] h-fit"
+        className="w-[600px] h-fit select-none"
         classNames={{
           header: "text-3xl",
           closeButton: "text-black text-3xl top-2 right-2",

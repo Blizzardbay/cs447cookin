@@ -54,7 +54,7 @@ const router = useRouter();
         scrollBehavior="inside"
         radius="lg"
         size="2xl"
-        className="w-[600px] h-fit"
+        className="w-[600px] h-fit select-none"
         classNames={{
           header: "text-3xl",
           closeButton: "text-black text-3xl top-2 right-2",
@@ -66,7 +66,7 @@ const router = useRouter();
               <ModalHeader
                 className={`${pacifico.className} flex flex-col gap-1`}
               >
-                Log Out Account
+                Log Out
               </ModalHeader>
               <ModalBody>
                 <p className="font-medium">

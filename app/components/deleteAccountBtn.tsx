@@ -67,7 +67,7 @@ export default function DeleteAccountBtn() {
         scrollBehavior="inside"
         radius="lg"
         size="2xl"
-        className="w-[600px] h-fit"
+        className="w-[600px] h-fit select-none"
         classNames={{
           header: "text-3xl",
           closeButton: "text-black text-3xl top-2 right-2",

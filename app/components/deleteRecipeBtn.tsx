@@ -36,10 +36,9 @@ type RecipeCardProps = {
     style?: string;
   };
 
-export default function DeleteRecipeBtn({ recipe, update_main }) {
+export default function DeleteRecipeBtn({ recipe, style, update_main }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
   const router = useRouter();
-  const style = "";
   // Delete recipe from database
   // If you remove this function go to line 87 and remove the function from the Button
   const deleteRecipe1 = async () => {
@@ -81,7 +80,7 @@ export default function DeleteRecipeBtn({ recipe, update_main }) {
         scrollBehavior="inside"
         radius="lg"
         size="2xl"
-        className="w-[600px] h-fit"
+        className="w-[600px] h-fit select-none"
         classNames={{
           header: "text-3xl",
           closeButton: "text-black text-3xl top-2 right-2",

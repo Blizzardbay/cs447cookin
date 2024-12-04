@@ -7,7 +7,6 @@ import RecipeGrid from "../components/recipeGrid";
 import Header from "../components/header";
 import AddRecipeBtn from "../components/addRecipeBtn";
 import FilterBtn from "../components/filterBtn";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 // TODO: Add animation for recipes
