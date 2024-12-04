@@ -46,6 +46,7 @@ const Favorite = ({ data, favorites }) => {
 		}
 		if(current_favorites !== null) {
 			if(action === "REMOVE") {
+				
 				setCurrentFavorites(current_favorites.filter((recipe) => recipe.recipe_title !== favorite.recipe_title));
 			}
 			else {
@@ -79,6 +80,7 @@ const Favorite = ({ data, favorites }) => {
 				}
 			}
 		}
+		setUpdate(!update);
 		setUpdateMain(!updateMain);
 	};
 

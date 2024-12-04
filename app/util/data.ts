@@ -166,8 +166,12 @@ export async function insertRecipe(data, creator) {
 		if(!total_time) {
 			return { success: false, redirectUrl: "/home", error: "Invaild Total Time. Total Time must be non-null and not empty."};
 		}
-		const notes = data.notes;
+		var notes = data.notes;
+		if(notes === "") {
+			notes = " ";
+		}
 		if(!notes) {
+			console.log("FAIL------------------------")
 			return { success: false, redirectUrl: "/home", error: "Invaild Notes. Notes must be non-null and not empty."};
 		}
 		const food_type = data.foodType;
@@ -229,6 +233,55 @@ export async function insertUserData(formData: FormData) {
 			const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			
 			if(email_regex.test(formData.get("username"))) {
+				const first = formData.get("username").lastIndexOf("@");
+				const second = formData.get("username").lastIndexOf(".");
+				
+				const email_website = formData.get("username").substring(first + 1, second);
+				
+				const email_domain = formData.get("username").substring(second + 1, formData.get("username").length);
+				
+				switch(email_website) {
+					case "icloud": {
+						if(email_domain !== "com") {
+							return { success: false, redirectUrl: "/", error: "Invaild email domain."};
+						}
+						break;
+					}
+					case "gmail": {
+						if(email_domain !== "com") {
+							return { success: false, redirectUrl: "/", error: "Invaild email domain."};
+						}
+						break;
+					}
+					case "outlook": {
+						if(email_domain !== "com") {
+							return { success: false, redirectUrl: "/", error: "Invaild email domain."};
+						}
+						break;
+					}
+					case "yahoo": {
+						if(email_domain !== "com") {
+							return { success: false, redirectUrl: "/", error: "Invaild email domain."};
+						}
+						break;
+					}
+					case "aol": {
+						if(email_domain !== "com") {
+							return { success: false, redirectUrl: "/", error: "Invaild email domain."};
+						}
+						break;
+					}
+					case "umbc": {
+						if(email_domain !== "edu") {
+							return { success: false, redirectUrl: "/", error: "Invaild email domain."};
+						}
+						break;
+					}
+					default: {
+						return { success: false, redirectUrl: "/", error: "Invaild email website."};
+					}
+				}
+				
 				if(formData.get("password") !== "" && formData.get("password") !== null) {
 					if(formData.get("password").length >= 9) {
 						const password_regex = /((\w)*(\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\=|\+|\[|\]|\{|\}|\\|\||\;|\:|\"|\'|\,|\<|\.|\>|\/|\?)+(\w)*)+/;

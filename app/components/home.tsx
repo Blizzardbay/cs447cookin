@@ -99,6 +99,7 @@ const Home = ({ data, favorites }) => {
 				}
 			}
 		}
+		setUpdate(!update);
 		setUpdateMain(!updateMain);
 	};
 	

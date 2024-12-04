@@ -45,7 +45,6 @@ const router = useRouter();
   const addFavorite = async () => {
     try {
       // Add favorite recipe to database
-      
 	  const cookie_list = document.cookie;
 		
 		const str = cookie_list.split("=");
@@ -55,7 +54,6 @@ const router = useRouter();
 				const result = await toggleFavorite(!isFavorite, decodeURIComponent(str[1]), recipe.recipe_title);
 				
 				setIsFavorite(!isFavorite)
-				
 				
 				router.refresh()
 			}
