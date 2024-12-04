@@ -107,7 +107,7 @@ const router = useRouter();
 				
 				const result2 = await insertRecipe(temp, decodeURIComponent(str[1]))
 				
-				update_main(null, "MODIFY", JSON.parse(JSON.stringify(editRecipe)), recipe.recipe_title);
+				update_main(null, "MODIFY", JSON.parse(JSON.stringify(temp)), recipe.recipe_title);
 				
 				router.refresh()
 			}

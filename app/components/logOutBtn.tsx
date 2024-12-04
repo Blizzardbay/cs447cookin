@@ -2,6 +2,7 @@ import { IoLogInOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
 
 import {
@@ -19,6 +20,7 @@ import {
 export default function LogOutBtn() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
+const router = useRouter();
   // Delete account from database
   // If you remove this function go to line 68 and remove the function from the Button
   const logOutAccount = async () => {
@@ -27,6 +29,8 @@ export default function LogOutBtn() {
         // Add delete recipe function here (use title variabble to query recipe)
         // Code here...
 		const result = await LogOut();
+		
+		router.push("/");
 		
         toast.success(`Account has logged out!`);
       } catch (error) {
@@ -73,11 +77,11 @@ export default function LogOutBtn() {
                 <Button
                   onPress={() => {
                     logOutAccount();
-                    onClose;
+                    onClose();
                   }}
                   className="text-white bg-black"
                 >
-                  Delete Account
+                  Log Out
                 </Button>
                 <Button color="danger" onPress={onClose}>
                   Close
