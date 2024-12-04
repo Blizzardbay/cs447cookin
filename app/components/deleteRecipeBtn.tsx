@@ -2,6 +2,9 @@ import { IoCloseOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import { useRouter } from "next/navigation";
+
 import {
   Modal,
   ModalContent,
@@ -33,23 +36,39 @@ type RecipeCardProps = {
     style?: string;
   };
 
+<<<<<<< Updated upstream
 export default function DeleteRecipeBtn({ recipe, style }: RecipeCardProps) {
+=======
+export default function DeleteRecipeBtn({ recipe, update_main }) {
+>>>>>>> Stashed changes
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
-
+  const router = useRouter();
   // Delete recipe from database
   // If you remove this function go to line 87 and remove the function from the Button
-  const deleteRecipe = async () => {
+  const deleteRecipe1 = async () => {
     // Delete recipe from database
       try {
         // Add delete recipe function here (use title variabble to query recipe)
+		
+		const cookie_list = document.cookie;
+		
+		const str = cookie_list.split("=");
+		
+		if(str.length >= 2) {
+			if(decodeURIComponent(str[1]) === recipe.creator) {
+				const result = await deleteRecipe(recipe.recipe_title);
+				update_main(null, "REMOVELIST", null, recipe.recipe_title)
+				router.refresh()
+			}
+		}
         // Code here...
-        toast.success(`${recipe.title} recipe has been deleted!`);
+        toast.success(`${recipe.recipe_title} recipe has been deleted!`);
       } catch (error) {
         toast.error(`Error deleting recipe!`);
         console.error(`Error deleting recipe: ${error}`);
       } finally {
         // Debug message
-        console.log(`Deleting recipe: ${recipe.title}`);
+        console.log(`Deleting recipe: ${recipe.recipe_title}`);
       }
   };
 
@@ -82,14 +101,14 @@ export default function DeleteRecipeBtn({ recipe, style }: RecipeCardProps) {
               <ModalBody>
                 <p className="font-medium">
                   Are you sure you want to delete{" "}
-                  <span className="font-bold">{recipe.title}</span>?
+                  <span className="font-bold">{recipe.recipe_title}</span>?
                 </p>
               </ModalBody>
               <ModalFooter>
                 <Button
                   onPress={() => {
-                    deleteRecipe();
-                    onClose;
+                    deleteRecipe1();
+                    onClose();
                   }}
                   className="text-white bg-black"
                 >

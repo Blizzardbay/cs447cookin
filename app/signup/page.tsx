@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from "next/navigation";
+import { useState, useEffect, useRef } from 'react';
 import { insertUserData } from '@/app/util/data';
 import {inter, pacifico} from '@/app/fonts/fonts';
 import Image from 'next/image';
@@ -7,6 +9,25 @@ import Link from 'next/link';
 import signupImage from '@/app/assets/images/signupImage.jpg';
 
 export default function SignUp() {
+	const router = useRouter();
+
+	const [create_color, setCreateColor] = useState("black");
+    const [create_text, setCreateText] = useState("");
+	
+	const createAccount = async (data) => {
+		data.preventDefault();
+		
+		const result = await insertUserData(new FormData(data.target));
+		
+		if(result.success == true) {
+			router.push(result.redirectUrl);
+		}
+		else {
+			setCreateColor("red");
+
+			setCreateText(result.error);
+		}
+	};
     return (
         <div className={`${inter.className} antialiased min-h-screen min-w-[768px] grid grid-cols-2 gap-16 place-content-stretch place-items-stretch`}>
             <div>
@@ -23,7 +44,8 @@ export default function SignUp() {
                 </header>
                 <main className="w-[75%] flex flex-col gap-6 justify-center items-center [&>form]:m-auto [&>form]:text-center [&>form]:w-full ">
                     <h3 className='text-3xl font-semibold'>Create Account</h3>
-                    <form action={insertUserData} className='w-full flex flex-col gap-6 [&>label]:font-semibold'>
+					<p style={{color:"red"}}>{create_text}</p>
+                    <form onSubmit={createAccount} className='w-full flex flex-col gap-6 [&>label]:font-semibold'>
                         <div className='flex flex-col gap-[2px] items-start'>
                             <label htmlFor='username' className='text-lg'>Email</label>
                             <input type="text" name="username" placeholder='Enter your email' className="w-full h-10 px-3 border-[1px] border-[#808080] rounded-md truncate"/>

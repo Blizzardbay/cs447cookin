@@ -3,14 +3,15 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@ne
 import { useState, useMemo, useEffect } from "react";
 import toast from "react-hot-toast";
 
-export default function filterBtn() {
-  const [filterSelection, setFilterSelection] = useState(new Set(["All"]));
+export default function filterBtn({ recipes, modifyList, currentfSelection, favorites }) {
+  const [filterSelection, setFilterSelection] = useState(currentfSelection);
 
   const selectedValue = useMemo(
     () => Array.from(filterSelection).join(", ").replaceAll("_", " "),
     [filterSelection]
   );
 
+<<<<<<< Updated upstream
    // Filter recipes from database
    // If you remove this function go to line 48 and remove the function from the onSelectionChange
   const filterRecipes = async (keys) => {
@@ -26,8 +27,171 @@ export default function filterBtn() {
       console.log(`Filtering recipes: ${selectedValue}`);
     }
   }
+=======
+	useEffect(() => {
+		switch(filterSelection.currentKey) {
+				case "My Recipes": {
+					var temp = JSON.parse(JSON.stringify(recipes));
+					
+					const cookie_list = document.cookie;
+		
+					const str = cookie_list.split("=");
+					
+					if(str.length >= 2) {
+						modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => decodeURIComponent(str[1]) === recipe.creator))), filterSelection.currentKey);
+					}
+					break;
+				}
+				case "Favorites": {
+					var temp = JSON.parse(JSON.stringify(recipes));
+					
+					modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => {
+						if(favorites !== null) {
+							for(var i = 0; i < favorites.length;i++) {
+								if(favorites[i].recipe_title === recipe.recipe_title) {
+									return true;
+								}
+							}
+							return false;
+						}
+					}))), filterSelection.currentKey);
+					break;
+				}
+				case "Descending Cost": {
+					var temp = JSON.parse(JSON.stringify(recipes));
+					temp.sort((a, b) => {
+						var cost_a = 0;
+						var cost_b = 0;
+						
+						if(a.food_cost === "High") {
+							cost_a = 3;
+						}
+						if(a.food_cost === "Medium") {
+							cost_a = 2;
+						}
+						if(a.food_cost === "Low") {
+							cost_a = 1;
+						}
+						if(b.food_cost === "High") {
+							cost_b = 3;
+						}
+						if(b.food_cost === "Medium") {
+							cost_b = 2;
+						}
+						if(b.food_cost === "Low") {
+							cost_b = 1;
+						}
+						return cost_b - cost_a;
+					});
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					break;
+				}
+				case "Ascending Cost": {
+					var temp = JSON.parse(JSON.stringify(recipes));
+					temp.sort((a, b) => {
+						var cost_a = 0;
+						var cost_b = 0;
+						
+						if(a.food_cost === "High") {
+							cost_a = 3;
+						}
+						if(a.food_cost === "Medium") {
+							cost_a = 2;
+						}
+						if(a.food_cost === "Low") {
+							cost_a = 1;
+						}
+						if(b.food_cost === "High") {
+							cost_b = 3;
+						}
+						if(b.food_cost === "Medium") {
+							cost_b = 2;
+						}
+						if(b.food_cost === "Low") {
+							cost_b = 1;
+						}
+						return cost_a - cost_b;
+					});
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					break;
+				}
+				case "Descending Time": {
+					var temp = JSON.parse(JSON.stringify(recipes));
+					temp.sort((a, b) => {
+						return b.total_time - a.total_time;
+					});
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					break;
+				}
+				case "Ascending Time": {
+					var temp = JSON.parse(JSON.stringify(recipes));
+					temp.sort((a, b) => {
+						return a.total_time - b.total_time;
+					});
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					break;
+				}
+				case "Recent": {
+					var temp = JSON.parse(JSON.stringify(recipes));
+					temp.reverse();
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					break;
+				}
+				case "All":
+				default: {
+					modifyList(JSON.parse(JSON.stringify(recipes)), filterSelection.currentKey);
+					break;
+				}
+			}
+	}, [filterSelection])
+>>>>>>> Stashed changes
 
+	const [logged_in, setLoggedIn] = useState(false);
+	
+	useEffect(() => {
+		const cookie_list = document.cookie;
+		
+		const str = cookie_list.split("=");
+		if(str.length >= 2) {
+			if(str[0] === "LoggedInUser") {
+				setLoggedIn(true);
+			}
+		}
+	}, []);
+	
+	if(logged_in === true) {
+	  return (
+		<Dropdown>
+		  <DropdownTrigger>
+			<Button 
+			  variant="bordered" 
+			  className="capitalize w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium border-black text-black"
+			>
+			  {selectedValue}<IoFilter size={24} />
+			</Button>
+		  </DropdownTrigger>
+		  <DropdownMenu 
+			aria-label="Single selection example"
+			variant="flat"
+			disallowEmptySelection
+			selectionMode="single"
+			selectedKeys={filterSelection}
+			onSelectionChange={setFilterSelection}
+		  >
+			<DropdownItem key="All">All</DropdownItem>
+			<DropdownItem key="Recent">Recent</DropdownItem>
+			<DropdownItem key="Ascending Cost">Ascending Cost</DropdownItem>
+			<DropdownItem key="Descending Cost">Descending Cost</DropdownItem>
+			<DropdownItem key="Ascending Time">Ascending Time</DropdownItem>
+			<DropdownItem key="Descending Time">Descending Time</DropdownItem>
+			<DropdownItem key="My Recipes">My Recipes</DropdownItem>
+			<DropdownItem key="Favorites">Favorites</DropdownItem>
+		  </DropdownMenu>
+		</Dropdown>
+	  );
+  }
   return (
+<<<<<<< Updated upstream
     <Dropdown>
       <DropdownTrigger>
         <Button 
@@ -58,4 +222,32 @@ export default function filterBtn() {
       </DropdownMenu>
     </Dropdown>
   );
+=======
+		<Dropdown>
+		  <DropdownTrigger>
+			<Button 
+			  variant="bordered" 
+			  className="capitalize w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium border-black text-black"
+			>
+			  {selectedValue}<IoFilter size={24} />
+			</Button>
+		  </DropdownTrigger>
+		  <DropdownMenu 
+			aria-label="Single selection example"
+			variant="flat"
+			disallowEmptySelection
+			selectionMode="single"
+			selectedKeys={filterSelection}
+			onSelectionChange={setFilterSelection}
+		  >
+			<DropdownItem key="All">All</DropdownItem>
+			<DropdownItem key="Recent">Recent</DropdownItem>
+			<DropdownItem key="Ascending Cost">Ascending Cost</DropdownItem>
+			<DropdownItem key="Descending Cost">Descending Cost</DropdownItem>
+			<DropdownItem key="Ascending Time">Ascending Time</DropdownItem>
+			<DropdownItem key="Descending Time">Descending Time</DropdownItem>
+		  </DropdownMenu>
+		</Dropdown>
+	  );
+>>>>>>> Stashed changes
 }

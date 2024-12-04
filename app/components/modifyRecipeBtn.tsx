@@ -3,6 +3,9 @@ import { FaRegEdit } from "react-icons/fa";
 import Form from "next/form";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import { useRouter } from "next/navigation";
+
 import {
   Modal,
   ModalContent,
@@ -37,11 +40,10 @@ type RecipeCardStyle = {
   style: string;
 };
 
-export default function ModifyRecipeBtn({
-  recipe,
-  style,
-}: RecipeCardProps & RecipeCardStyle) {
+export default function ModifyRecipeBtn({recipe, style, update_main}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
+
+const router = useRouter();
 
   const [editRecipe, setEditRecipe] = useState({
     image: "",
@@ -49,8 +51,8 @@ export default function ModifyRecipeBtn({
     cuisine: "",
     foodType: "",
     cost: "",
-    ingredients: "",
-    directions: "",
+    ingredients: [],
+    directions: [],
     servings: 0,
     prepTime: 0,
     cookTime: 0,
@@ -58,12 +60,59 @@ export default function ModifyRecipeBtn({
     notes: "",
   }); // State for editRecipe
 
+  useEffect(() => {
+	var temp = JSON.parse(JSON.stringify(editRecipe));
+	temp.title = recipe.recipe_title;
+	temp.cuisine = recipe.cuisine;
+	temp.foodType = recipe.food_type;
+	temp.cost = recipe.food_cost;
+	if(recipe.ingredients.length > 1) {
+		temp.ingredients = recipe.ingredients;
+	}
+	else {
+		temp.ingredients = recipe.ingredients[0].split(",");
+	}
+	if(recipe.directions.length > 1) {
+		temp.directions = recipe.directions;
+	}
+	else {
+		temp.directions = recipe.directions[0].split(",");
+	}
+	temp.servings = recipe.serving;
+	temp.prepTime = recipe.prep_time;
+	temp.cookTime = recipe.cook_time;
+	temp.totalTime = recipe.total_time;
+	temp.notes = recipe.notes;
+	
+    setEditRecipe(temp);
+  }, [recipe]);
   // Add edit recipe to database
   // If you remove this function go to line 305 and remove the function from Button
   const submitRecipe = async () => {
     try {
       // Add editRecipe function here (use editRecipe variable to add editRecipe properties)
-      // Code here...
+      
+	  
+		const cookie_list = document.cookie;
+		
+		const str = cookie_list.split("=");
+		
+		if(str.length >= 2) {
+			if(str[0] === "LoggedInUser" && decodeURIComponent(str[1]) === recipe.creator) {
+				const result1 = await deleteRecipe(recipe.recipe_title);
+				
+				var temp = JSON.parse(JSON.stringify(editRecipe));
+				
+				temp.totalTime = temp.prepTime + temp.cookTime;
+				
+				const result2 = await insertRecipe(temp, decodeURIComponent(str[1]))
+				
+				update_main(null, "MODIFY", JSON.parse(JSON.stringify(editRecipe)), recipe.recipe_title);
+				
+				router.refresh()
+			}
+		}
+	  
       toast.success(
         `${
           editRecipe.title ? editRecipe.title : recipe.title
@@ -74,7 +123,7 @@ export default function ModifyRecipeBtn({
       console.error(`Error adding editRecipe: ${error}`);
     } finally {
       // Debug message
-      console.log(`Fetching recipes: ${JSON.stringify(editRecipe)}`);
+     // console.log(`Fetching recipes: ${JSON.stringify(editRecipe)}`);
     }
   };
 
@@ -134,8 +183,12 @@ export default function ModifyRecipeBtn({
                       <input
                         type="text"
                         name="title"
+<<<<<<< Updated upstream
                         defaultValue={recipe.title}
                         placeholder="Enter the title of your recipe"
+=======
+                        value={editRecipe.title || ""}
+>>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -150,7 +203,7 @@ export default function ModifyRecipeBtn({
                       <select
                         name="cuisine"
                         id="cuisine"
-                        defaultValue={recipe.cuisine || "default"}
+                        defaultValue={editRecipe.cuisine || "default"}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -179,7 +232,7 @@ export default function ModifyRecipeBtn({
                       <select
                         name="foodType"
                         id="foodType"
-                        defaultValue={recipe.foodType || "default"}
+                        defaultValue={editRecipe.foodType || "default"}
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -210,7 +263,7 @@ export default function ModifyRecipeBtn({
                       <select
                         name="cost"
                         id="cost"
-                        defaultValue={recipe.cost || "default"}
+                        defaultValue={editRecipe.cost || "default"}
                         onChange={(e) =>
                           setEditRecipe({ ...editRecipe, cost: e.target.value })
                         }
@@ -228,8 +281,14 @@ export default function ModifyRecipeBtn({
                       <label htmlFor="ingredients">Ingredients</label>
                       <textarea
                         name="ingredients"
+<<<<<<< Updated upstream
                         defaultValue={
                           recipe.ingredients?.join(", ")
+=======
+                        value={
+                          Array.isArray(editRecipe.ingredients) ? (editRecipe.ingredients?.join(", ") ||
+                          "Enter the ingredients of your editRecipe") : editRecipe.ingredients
+>>>>>>> Stashed changes
                         }
                         placeholder="Enter the ingredients of your recipe"
                         onChange={(e) =>
@@ -245,8 +304,15 @@ export default function ModifyRecipeBtn({
                       <label htmlFor="instructions">Instructions</label>
                       <textarea
                         name="instructions"
+<<<<<<< Updated upstream
                         defaultValue={recipe.directions?.join(", ")}
                         placeholder="Enter the instructions of your recipe"
+=======
+                        value={
+							Array.isArray(editRecipe.directions) ? (editRecipe.directions?.join(", ") ||
+                          "Enter the ingredients of your editRecipe") : editRecipe.directions
+                        }
+>>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -261,7 +327,11 @@ export default function ModifyRecipeBtn({
                       <input
                         type="number"
                         name="servings"
+<<<<<<< Updated upstream
                         defaultValue={recipe.servings}
+=======
+                        value={editRecipe.servings?.toString() || "e.g. 8"}
+>>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -276,7 +346,11 @@ export default function ModifyRecipeBtn({
                       <input
                         type="number"
                         name="prepTime"
+<<<<<<< Updated upstream
                         defaultValue={recipe.prepTime}
+=======
+                        value={editRecipe.prepTime?.toString() || "e.g. 10"}
+>>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -291,7 +365,11 @@ export default function ModifyRecipeBtn({
                       <input
                         type="number"
                         name="cookTime"
+<<<<<<< Updated upstream
                         defaultValue={recipe.cookTime}
+=======
+                        value={editRecipe.cookTime?.toString() || "e.g. 15"}
+>>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -311,8 +389,14 @@ export default function ModifyRecipeBtn({
                       <label htmlFor="notes">Notes (Optional)</label>
                       <textarea
                         name="notes"
+<<<<<<< Updated upstream
                         defaultValue={recipe.notes}
                         placeholder="Enter notes for your recipe"
+=======
+                        value={
+                          editRecipe.notes || "Enter notes for your editRecipe"
+                        }
+>>>>>>> Stashed changes
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
@@ -333,7 +417,7 @@ export default function ModifyRecipeBtn({
                       totalTime: editRecipe.cookTime + editRecipe.prepTime,
                     });
                     submitRecipe();
-                    onClose;
+                    onClose();
                   }}
                   className="text-white bg-black"
                 >

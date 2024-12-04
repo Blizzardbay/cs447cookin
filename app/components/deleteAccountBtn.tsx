@@ -1,6 +1,8 @@
 import { IoPersonOutline } from "react-icons/io5";
+import { insertUserData, removeUserData, tryUserLogin } from '@/app/util/data';
 import { pacifico } from "@/app/fonts/fonts";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 import {
@@ -18,13 +20,31 @@ import {
 export default function DeleteAccountBtn() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
+	const router = useRouter();
+
   // Delete account from database
   // If you remove this function go to line 68 and remove the function from the Button
   const deleteAccount = async () => {
     // Delete recipe from database
+		const cookie_list = document.cookie;
+		
+		const str = cookie_list.split("=");
+		
+		if(str.length >= 2) {
+			const result = await removeUserData(decodeURIComponent(str[1]), true);
+			
+			if(result.success == true) {
+				if(result.redirectUrl === undefined) {
+					router.push("/");
+				}
+				else {
+					router.push(result.redirectUrl);
+				}
+			}
+		}
       try {
         // Add delete recipe function here (use title variabble to query recipe)
-        // Code here...
+		
         toast.success(`Account has been deleted!`);
       } catch (error) {
         toast.error(`Error deleting account!`);

@@ -3,6 +3,8 @@ import { pacifico } from "@/app/fonts/fonts";
 import Form from "next/form";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import { useRouter } from "next/navigation";
 import {
   Modal,
   ModalContent,
@@ -18,6 +20,8 @@ import {
 
 export default function AddRecipeBtn() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
+
+const router = useRouter();
 
   const [recipe, setRecipe] = useState({
     image: "",
@@ -40,14 +44,28 @@ export default function AddRecipeBtn() {
   const submitRecipe = async () => {
       try {
         // Add recipe function here (use recipe variable to add recipe properties)
-        // Code here...
+        
+		const cookie_list = document.cookie;
+		
+		const str = cookie_list.split("=");
+		
+		if(str.length >= 2) {
+			if(str[0] === "LoggedInUser") {
+				var temp = JSON.parse(JSON.stringify(recipe));
+				
+				temp.totalTime = temp.prepTime + temp.cookTime;
+				
+				const result = await insertRecipe(temp, decodeURIComponent(str[1]))
+			}
+		}
+		window.location.href = '/home';
         toast.success(`${recipe.title} recipe added successfully!`);
       } catch (error) {
         toast.error(`Error adding recipe!`);
         console.error(`Error adding recipe: ${error}`);
       } finally {
         // Debug message
-        console.log(`Fetching recipes: ${JSON.stringify(recipe)}`);
+        //console.log(`Fetching recipes: ${JSON.stringify(recipe)}`);
       }
   };
 
@@ -284,7 +302,7 @@ export default function AddRecipeBtn() {
                       totalTime: recipe.cookTime + recipe.prepTime,
                     });
                     submitRecipe();
-                    onClose;
+                    onClose();
                   }}
                   className="text-white bg-black"
                 >

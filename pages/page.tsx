@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { insertUserData, removeUserData, tryUserLogin } from '@/app/util/data';
 import {inter, pacifico} from '@/app/fonts/fonts';
 import Image from 'next/image';
@@ -9,40 +9,6 @@ import Link from 'next/link';
 import cookinIcon from '@/app/assets/images/cookinIcon1.png';
 
 export default function Login() {
-	const router = useRouter();
-	
-	const [user_logged_in, setUserLoggedIn] = useState(false);
-	const [username, setUsername] = useState("");
-	
-	useEffect(() => {
-		const cookie_list = document.cookie;
-		
-		const str = cookie_list.split("=");
-		if(str.length >= 2) {
-			if(str[0] === "LoggedInUser") {
-				setUserLoggedIn(true);
-				router.push("/home");
-			}
-		}
-	}, [router])
-
-	const [login_color, setLoginColor] = useState("#808080");
-    const [login_text, setLoginText] = useState("");
-
-	const login = async (data) => {
-		data.preventDefault();
-		
-		const result = await tryUserLogin(new FormData(data.target), user_logged_in);
-		
-		if(result.success == true) {
-			router.push(result.redirectUrl);
-		}
-		else {
-			setLoginColor("#FF0000");
-			setLoginText(result.error);
-		}
-	};
-
 	return (
 		<div className={`${inter.className} antialiased relative min-h-screen min-w-[768px] flex flex-col gap-16 justify-center items-center`}>
 			<header className={`${pacifico.className} antialiased flex flex-col gap-4 items-center justify-center`}>
@@ -51,15 +17,14 @@ export default function Login() {
 			</header>
 		  	<main className="w-[30%] flex flex-col gap-6 justify-center items-center [&>form]:m-auto [&>form]:text-center [&>form]:w-full ">
 				<Link href="/home" className='text-3xl font-semibold md:text-4xl'>Ready up 😋!</Link>
-				<p style={{color: login_color}}>{login_text}</p>
-				<form onSubmit={login} className='w-full flex flex-col gap-6 [&>label]:font-semibold'>
+				<form action={tryUserLogin} className='w-full flex flex-col gap-6 [&>label]:font-semibold'>
 					<div className='flex flex-col gap-[2px] items-start'>
 						<label htmlFor='username' className='text-lg'>Email</label>
-						<input type="text" name="username" placeholder='Enter your email' className="w-full h-10 px-3 border-[1px] border-[${login_color}] rounded-md truncate"/>
+						<input type="text" name="username" placeholder='Enter your email' className="w-full h-10 px-3 border-[1px] border-[#808080] rounded-md truncate"/>
 					</div>
 					<div className='flex flex-col gap-[2px] items-start'>
 						<label htmlFor="password" className='text-lg'>Password</label>
-						<input type="text" name="password" placeholder='Enter your password' className="w-full h-10 px-3 border-[1px] border-[${login_color}] rounded-md truncate"/>
+						<input type="text" name="password" placeholder='Enter your password' className="w-full h-10 px-3 border-[1px] border-[#808080] rounded-md truncate"/>
 					</div>
 					<button type="submit" className='w-full h-10 text-lg text-white bg-black rounded-full'>Login</button>
 				</form>
