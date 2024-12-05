@@ -1,6 +1,6 @@
 import { IoFilter } from "react-icons/io5";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
   const [filterSelection, setFilterSelection] = useState(currentfSelection);
