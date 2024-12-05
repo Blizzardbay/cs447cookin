@@ -45,7 +45,7 @@ export default function Login() {
 
   return (
     <div
-      className={`${inter.className} antialiased relative min-h-screen min-w-[768px] flex flex-col gap-16 justify-center items-center select-none`}
+      className={`${inter.className} antialiased relative h-full w-full min-w-[768px] flex flex-col gap-16 justify-center items-center select-none overflow-hidden`}
     >
       <header
         className={`${pacifico.className} antialiased flex flex-col gap-4 items-center justify-center`}
@@ -84,7 +84,7 @@ export default function Login() {
               placeholder="Enter your password"
               autoComplete="off"
               required
-              className="w-full h-10 px-3 border-[1px] border-[${login_color}] rounded-md truncate"
+              className="w-full h-10 px-3 pr-12 border-[1px] border-[${login_color}] rounded-md truncate"
             />
             <div
               onClick={() => setShowPassword(!showPassword)}
