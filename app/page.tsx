@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { tryUserLogin } from "@/app/util/data";
 import { inter, pacifico } from "@/app/fonts/fonts";
 import Image from "next/image";
@@ -16,7 +16,21 @@ export default function Login() {
   const [user_logged_in, setUserLoggedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
+	const login = async (data) => {
+		data.preventDefault();
+		
+		const result = await tryUserLogin(new FormData(data.target), user_logged_in);
+		
+		if(result.success == true) {
+			if(result.redirectUrl) {
+				router.push(result.redirectUrl);
+			}
+		}
+		else {
+			toast.error(result.error ?? "");
+		}
+	};
+useEffect(() => {
     const cookie_list = document.cookie;
 
     const str = cookie_list.split("=");
@@ -28,21 +42,6 @@ export default function Login() {
     }
   }, [router]);
 
-  const login = async (data) => {
-    data.preventDefault();
-
-    const result = await tryUserLogin(
-      new FormData(data.target),
-      user_logged_in
-    );
-
-    if (result.success == true) {
-      router.push("/home");
-    } else {
-      toast.error(result.error ?? "");
-    }
-  };
-
   return (
     <div
       className={`${inter.className} antialiased relative h-full w-full min-w-[768px] flex flex-col gap-16 justify-center items-center select-none overflow-hidden`}
@@ -50,8 +49,8 @@ export default function Login() {
       <header
         className={`${pacifico.className} antialiased flex flex-col gap-4 items-center justify-center`}
       >
-        <h1 className="text-8xl">Cookin'</h1>
-        <p className="text-lg">Cookin' Up Flavor, One Recipe at a Time!</p>
+        <h1 className="text-8xl">Cookin&apos;</h1>
+        <p className="text-lg">Cookin&apos; Up Flavor, One Recipe at a Time!</p>
       </header>
       <main className="w-[30%] flex flex-col gap-6 justify-center items-center [&>form]:m-auto [&>form]:text-center [&>form]:w-full ">
         <Link href="/home" className="text-3xl font-semibold md:text-4xl">

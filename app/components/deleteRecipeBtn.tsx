@@ -1,8 +1,7 @@
 import { IoCloseOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
-import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import { deleteRecipe } from '@/app/util/data';
 import { useRouter } from "next/navigation";
 
 import {
@@ -16,25 +15,6 @@ import {
 } from "@nextui-org/react";
 
 // TODO: Delete recipe from database
-
-type RecipeCardProps = {
-    recipe: {
-      image?: string;
-      title?: string;
-      cuisine?: string;
-      foodType?: string;
-      cost?: string;
-      ingredients?: string[];
-      directions?: string[];
-      servings?: number;
-      prepTime?: number;
-      cookTime?: number;
-      totalTime?: number;
-      favorite?: boolean;
-      notes?: string;
-    };
-    style?: string;
-  };
 
 export default function DeleteRecipeBtn({ recipe, style, update_main }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
@@ -52,7 +32,7 @@ export default function DeleteRecipeBtn({ recipe, style, update_main }) {
 		
 		if(str.length >= 2) {
 			if(decodeURIComponent(str[1]) === recipe.creator) {
-				const result = await deleteRecipe(recipe.recipe_title);
+				await deleteRecipe(recipe.recipe_title);
 				update_main(null, "REMOVELIST", null, recipe.recipe_title)
 				router.refresh()
 			}

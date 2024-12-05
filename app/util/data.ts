@@ -116,7 +116,7 @@ export async function newFavorite(user, recipe) {
 			`;
 		return { success: true, redirectUrl: "/home", error: ""};
 	}
-	catch (error) {
+	catch {
 		return { success: false, redirectUrl: "/home", error: "Unable to favorite. Please contact website administrator."};
 	}
 }
@@ -126,7 +126,7 @@ export async function removeFavorite(user, recipe) {
 			
 		return { success: true, redirectUrl: "/home", error: ""};
 	}
-	catch (error) {
+	catch  {
 		return { success: false, redirectUrl: "/home", error: "Unable to delete favorite. Please contact website administrator."};
 	}
 }
@@ -166,7 +166,7 @@ export async function insertRecipe(data, creator) {
 		if(!total_time) {
 			return { success: false, redirectUrl: "/home", error: "Invaild Total Time. Total Time must be non-null and not empty."};
 		}
-		var notes = data.notes;
+		let notes = data.notes;
 		if(notes === "") {
 			notes = " ";
 		}
@@ -229,16 +229,19 @@ export async function GetAllRecipes() {
 export async function insertUserData(formData: FormData) {
 	try {
 		const temp_date = new Date()
-		if(formData.get("username") !== "" && formData.get("username") !== null) {
+
+		const user_name = formData.get("username")?.toString()
+
+		if(user_name !== "" && user_name) {
 			const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			
-			if(email_regex.test(formData.get("username"))) {
-				const first = formData.get("username").lastIndexOf("@");
-				const second = formData.get("username").lastIndexOf(".");
+			if(email_regex.test(user_name)) {
+				const first = user_name.lastIndexOf("@");
+				const second = user_name.lastIndexOf(".");
 				
-				const email_website = formData.get("username").substring(first + 1, second);
+				const email_website = user_name.substring(first + 1, second);
 				
-				const email_domain = formData.get("username").substring(second + 1, formData.get("username").length);
+				const email_domain = user_name.substring(second + 1, user_name.length);
 				
 				switch(email_website) {
 					case "icloud": {
@@ -282,11 +285,13 @@ export async function insertUserData(formData: FormData) {
 					}
 				}
 				
-				if(formData.get("password") !== "" && formData.get("password") !== null) {
-					if(formData.get("password").length >= 9) {
+				const pass_word = formData.get("password")?.toString()
+
+				if(pass_word !== "" && pass_word) {
+					if(pass_word.length >= 9) {
 						const password_regex = /((\w)*(\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\=|\+|\[|\]|\{|\}|\\|\||\;|\:|\"|\'|\,|\<|\.|\>|\/|\?)+(\w)*)+/;
 						
-						if(password_regex.test(formData.get("password"))) {
+						if(password_regex.test(pass_word)) {
 							const username = formData.get("username")!.toString();
 			
 							const password = await bcrypt.hash(formData.get("password"), 10);
@@ -320,11 +325,11 @@ export async function insertUserData(formData: FormData) {
 			return { success: false, redirectUrl: "/", error: "Invaild email."};
 		}
 	}
-	catch (error) {
+	catch {
 		return { success: false, redirectUrl: "/", error: "Invaild form data. Please contact website administrator."};
 	}
 }
-export async function removeUserData(username, user_logged_in) {
+export async function removeUserData(username) {
 	try {
 		await sql`DELETE FROM user_information WHERE username=${username};`;
 		await sql`DELETE FROM favorite_table WHERE username=${username};`;

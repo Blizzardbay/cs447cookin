@@ -7,7 +7,6 @@ import RecipeGrid from "../components/recipeGrid";
 import Header from "../components/header";
 import AddRecipeBtn from "../components/addRecipeBtn";
 import FilterBtn from "../components/filterBtn";
-import { useRouter } from "next/navigation";
 
 // TODO: Add animation for recipes
 // TODO: Add functionality to sideBar (Navigation)
@@ -28,9 +27,7 @@ import { useRouter } from "next/navigation";
 // Done: Create a useState for recipes and search
 
 const Home = ({ data, favorites }) => {
-	const router = useRouter();
-
-	const [filterSelection, setFilterSelection] = useState(new Set(["All"]));
+	const [filterSelection, setFilterSelection] = useState("All");
 
 
   // Recipes State
@@ -53,7 +50,7 @@ const Home = ({ data, favorites }) => {
 	
 	const modify_list = (new_data, filter) => {
 		setRecipeList(new_data);
-		setFilterSelection(filter);
+		setFilterSelection(filter.currentKey);
 		setUpdate(!update);
 	};
 	const update_main = (favorite, action, new_change, old_name) => {
@@ -69,18 +66,18 @@ const Home = ({ data, favorites }) => {
 			}
 			else {
 				if(action === "ADD") {
-					var temp = JSON.parse(JSON.stringify(current_favorites));
+					const temp = JSON.parse(JSON.stringify(current_favorites));
 					temp.push(favorite)
 					setCurrentFavorites(temp);
 				}
 			}
 		}
 		if(action == "MODIFY") {
-			var temp2 = JSON.parse(JSON.stringify(recipe_list));
+			const temp2 = JSON.parse(JSON.stringify(recipe_list));
 			
-			for(var i = 0; i < recipe_list.length;i++) {
+			for(let i = 0; i < recipe_list.length;i++) {
 				if(recipe_list[i].recipe_title === old_name) {
-					var temp = JSON.parse(JSON.stringify(recipe_list[i]));
+					const temp = JSON.parse(JSON.stringify(recipe_list[i]));
 					temp.recipe_title = new_change.title;
 					temp.cuisine = new_change.cuisine;
 					temp.food_type = new_change.foodType;

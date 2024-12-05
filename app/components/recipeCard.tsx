@@ -1,26 +1,7 @@
-import { StaticImageData } from "next/image";
 import DeleteRecipeBtn from "./deleteRecipeBtn";
 import ModifyRecipeBtn from "./modifyRecipeBtn";
 import ViewRecipeBtn from "./viewRecipeBtn";
-import { useState, useEffect, useRef } from 'react';
-
-type RecipeCardProps = {
-  recipe: {
-    image?: string;
-    title?: string;
-    cuisine?: string;
-    foodType?: string;
-    cost?: string;
-    ingredients?: string[];
-    directions?: string[];
-    servings?: number;
-    prepTime?: number;
-    cookTime?: number;
-    totalTime?: number;
-    favorite?: boolean;
-    notes?: string;
-  };
-};
+import { useState, useEffect } from 'react';
 
 export default function RecipeCard({ recipe, favorites, update, update_main }) {
 	const [logged_in, setLoggedIn] = useState(false);

@@ -12,8 +12,12 @@ export default async function Page() {
 	if(logged_in) {
 		// logged_in.value
 		const favorites = await getFavorites(logged_in.value);
-		
-		return (<Home data={data} favorites={favorites.data?.rows}/>);
+
+		if(favorites) {
+			if(favorites.data) {
+				return (<Home data={data} favorites={favorites.data.rows}/>);
+			}
+		}
 	}
 
 	return (<Home data={data} favorites={null}/>);
