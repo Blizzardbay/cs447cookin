@@ -6,7 +6,7 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
   const [filterSelection, setFilterSelection] = useState(currentfSelection);
 
 	useEffect(() => {
-		switch(filterSelection) {
+		switch(filterSelection.currentKey) {
 				case "My Recipes": {
 					const temp = JSON.parse(JSON.stringify(recipes));
 					

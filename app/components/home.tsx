@@ -50,7 +50,7 @@ const Home = ({ data, favorites }) => {
 	
 	const modify_list = (new_data, filter) => {
 		setRecipeList(new_data);
-		setFilterSelection(filter);
+		setFilterSelection(filter.currentKey);
 		setUpdate(!update);
 	};
 	const update_main = (favorite, action, new_change, old_name) => {
