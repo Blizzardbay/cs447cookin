@@ -1,8 +1,7 @@
 import { IoCloseOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
-import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import { deleteRecipe } from '@/app/util/data';
 import { useRouter } from "next/navigation";
 
 import {

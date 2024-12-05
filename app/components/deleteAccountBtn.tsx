@@ -1,7 +1,6 @@
 import { IoPersonOutline } from "react-icons/io5";
-import { insertUserData, removeUserData, tryUserLogin } from '@/app/util/data';
+import { removeUserData } from '@/app/util/data';
 import { pacifico } from "@/app/fonts/fonts";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 

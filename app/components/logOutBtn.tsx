@@ -1,9 +1,8 @@
 import { IoLogInOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
-import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import { LogOut } from '@/app/util/data';
 
 import {
   Modal,
@@ -28,7 +27,7 @@ const router = useRouter();
       try {
         // Add delete recipe function here (use title variabble to query recipe)
         // Code here...
-		const result = await LogOut();
+		await LogOut();
 		
 		router.push("/");
 		

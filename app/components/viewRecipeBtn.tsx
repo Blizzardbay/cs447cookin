@@ -5,12 +5,7 @@ import defaultImage from "../assets/images/defaultImage.png";
 import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import {
-  LogOut,
-  insertRecipe,
-  deleteRecipe,
-  GetAllRecipes,
-  toggleFavorite,
-  getFavorites,
+  toggleFavorite
 } from "@/app/util/data";
 import { useRouter } from "next/navigation";
 
@@ -24,23 +19,6 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-type RecipeCardProps = {
-  recipe: {
-    image?: string;
-    title?: string;
-    cuisine?: string;
-    foodType?: string;
-    cost?: string;
-    ingredients?: string[];
-    directions?: string[];
-    servings?: number;
-    prepTime?: number;
-    cookTime?: number;
-    totalTime?: number;
-    favorite?: boolean;
-    notes?: string;
-  };
-};
 
 export default function ViewRecipeBtn({
   recipe,

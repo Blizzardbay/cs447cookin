@@ -28,8 +28,6 @@ import { useRouter } from "next/navigation";
 // Done: Create a useState for recipes and search
 
 const Home = ({ data, favorites }) => {
-	const router = useRouter();
-
 	const [filterSelection, setFilterSelection] = useState(new Set(["All"]));
 
 

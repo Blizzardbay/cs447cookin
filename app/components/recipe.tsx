@@ -26,7 +26,7 @@ const Recipe = ({ recipe, bisFavorite, ftoggleFavorite, user, addFavorite, remov
 		data.preventDefault();
 		
 		if(user !== "") {
-			const result = await ftoggleFavorite(!color_background[1] , user, recipe_title);
+			await ftoggleFavorite(!color_background[1] , user, recipe_title);
 			
 			if(!color_background[1] === true) {
 				setColorBackground(["red", !color_background[1] ]);
