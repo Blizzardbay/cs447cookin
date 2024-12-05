@@ -27,7 +27,7 @@ import FilterBtn from "../components/filterBtn";
 // Done: Create a useState for recipes and search
 
 const Home = ({ data, favorites }) => {
-	const [filterSelection, setFilterSelection] = useState(new Set(["All"]));
+	const [filterSelection, setFilterSelection] = useState("All");
 
 
   // Recipes State
@@ -54,7 +54,7 @@ const Home = ({ data, favorites }) => {
 		setUpdate(!update);
 	};
 	const update_main = (favorite, action, new_change, old_name) => {
-		if(filterSelection.has("Favorites") && action === "REMOVE") {
+		if(filterSelection === "Favorites" && action === "REMOVE") {
 			setRecipeList(recipe_list.filter((recipe) => recipe.recipe_title !== favorite.recipe_title));
 		}
 		if(action === "REMOVELIST") {

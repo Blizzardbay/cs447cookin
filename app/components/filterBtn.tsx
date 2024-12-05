@@ -5,12 +5,8 @@ import { useState, useMemo, useEffect } from "react";
 const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
   const [filterSelection, setFilterSelection] = useState(currentfSelection);
 
-  const selectedValue = useMemo(
-    () => Array.from(filterSelection).join(", ").replaceAll("_", " "),
-    [filterSelection]
-  );
 	useEffect(() => {
-		switch(filterSelection.currentKey) {
+		switch(filterSelection) {
 				case "My Recipes": {
 					const temp = JSON.parse(JSON.stringify(recipes));
 					
@@ -19,7 +15,7 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
 					const str = cookie_list.split("=");
 					
 					if(str.length >= 2) {
-						modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => decodeURIComponent(str[1]) === recipe.creator))), filterSelection.currentKey);
+						modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => decodeURIComponent(str[1]) === recipe.creator))), filterSelection);
 					}
 					break;
 				}
@@ -35,7 +31,7 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
 							}
 							return false;
 						}
-					}))), filterSelection.currentKey);
+					}))), filterSelection);
 					break;
 				}
 				case "Descending Cost": {
@@ -64,7 +60,7 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
 						}
 						return cost_b - cost_a;
 					});
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "Ascending Cost": {
@@ -93,7 +89,7 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
 						}
 						return cost_a - cost_b;
 					});
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "Descending Time": {
@@ -101,7 +97,7 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
 					temp.sort((a, b) => {
 						return b.total_time - a.total_time;
 					});
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "Ascending Time": {
@@ -109,18 +105,18 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
 					temp.sort((a, b) => {
 						return a.total_time - b.total_time;
 					});
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "Recent": {
 					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.reverse();
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "All":
 				default: {
-					modifyList(JSON.parse(JSON.stringify(recipes)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(recipes)), filterSelection);
 					break;
 				}
 			}
@@ -147,7 +143,7 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
 			  variant="bordered" 
 			  className="capitalize w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium text-black border-black hover:bg-black hover:text-white"
 			>
-			  {selectedValue}<IoFilter size={24} />
+			  {filterSelection}<IoFilter size={24} />
 			</Button>
 		  </DropdownTrigger>
 		  <DropdownMenu 
@@ -177,7 +173,7 @@ const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
 			  variant="bordered" 
 			  className="capitalize w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium text-black border-black hover:bg-black hover:text-white"
 			>
-			  {selectedValue}<IoFilter size={24} />
+			  {filterSelection}<IoFilter size={24} />
 			</Button>
 		  </DropdownTrigger>
 		  <DropdownMenu 
