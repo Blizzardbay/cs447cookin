@@ -57,7 +57,7 @@ const Home = ({ data, favorites }) => {
 		setUpdate(!update);
 	};
 	const update_main = (favorite, action, new_change, old_name) => {
-		if(filterSelection === "Favorites" && action === "REMOVE") {
+		if(filterSelection.has("Favorites") && action === "REMOVE") {
 			setRecipeList(recipe_list.filter((recipe) => recipe.recipe_title !== favorite.recipe_title));
 		}
 		if(action === "REMOVELIST") {

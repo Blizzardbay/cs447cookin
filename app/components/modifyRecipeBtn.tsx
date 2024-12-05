@@ -51,8 +51,8 @@ const router = useRouter();
     cuisine: "",
     foodType: "",
     cost: "",
-    ingredients: [],
-    directions: [],
+    ingredients: [""],
+    directions: [""],
     servings: 0,
     prepTime: 0,
     cookTime: 0,
@@ -285,7 +285,7 @@ const router = useRouter();
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
-                            ingredients: e.target.value,
+                            ingredients: [e.target.value],
                           })
                         }
                         className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
@@ -302,7 +302,7 @@ const router = useRouter();
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
-                            directions: e.target.value,
+                            directions: [e.target.value],
                           })
                         }
                         className="w-full h-20 px-3 border-[1px] border-[#808080] rounded-md truncate"

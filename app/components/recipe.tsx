@@ -67,7 +67,7 @@ const Recipe = ({ recipe, bisFavorite, ftoggleFavorite, user, addFavorite, remov
 			<p style={{ wordWrap: "break-word", width: "250px"}}>Food Type: {food_type}</p>
 			<p style={{ wordWrap: "break-word", width: "250px"}}>Food Cost: {food_cost}</p>
 			<form onSubmit={favorite_recipe} style={{textAlign: "center"}}>
-				<button type="submit" style={{textColor: color_text, backgroundColor: color_background[0]}}>Favorite Recipe</button>
+				<button type="submit" style={{color: color_text, backgroundColor: color_background[0]}}>Favorite Recipe</button>
 			</form>
 		</div>
 	);

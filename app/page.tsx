@@ -16,10 +16,6 @@ export default function Login() {
   const [user_logged_in, setUserLoggedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-<<<<<<< Updated upstream
-  useEffect(() => {
-    const cookie_list = document.cookie;
-=======
 	const login = async (data) => {
 		data.preventDefault();
 		
@@ -31,13 +27,11 @@ export default function Login() {
 			}
 		}
 		else {
-			setLoginColor("#FF0000");
-			if(result.error) {
-				setLoginText(result.error);
-			}
+			toast.error(result.error ?? "");
 		}
 	};
->>>>>>> Stashed changes
+useEffect(() => {
+    const cookie_list = document.cookie;
 
     const str = cookie_list.split("=");
     if (str.length >= 2) {
@@ -47,21 +41,6 @@ export default function Login() {
       }
     }
   }, [router]);
-
-  const login = async (data) => {
-    data.preventDefault();
-
-    const result = await tryUserLogin(
-      new FormData(data.target),
-      user_logged_in
-    );
-
-    if (result.success == true) {
-      router.push("/home");
-    } else {
-      toast.error(result.error ?? "");
-    }
-  };
 
   return (
     <div
