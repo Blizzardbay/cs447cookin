@@ -18,6 +18,23 @@ export default function Login() {
 
   useEffect(() => {
     const cookie_list = document.cookie;
+	const login = async (data) => {
+		data.preventDefault();
+		
+		const result = await tryUserLogin(new FormData(data.target), user_logged_in);
+		
+		if(result.success == true) {
+			if(result.redirectUrl) {
+				router.push(result.redirectUrl);
+			}
+		}
+		else {
+			setLoginColor("#FF0000");
+			if(result.error) {
+				setLoginText(result.error);
+			}
+		}
+	};
 
     const str = cookie_list.split("=");
     if (str.length >= 2) {

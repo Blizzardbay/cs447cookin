@@ -32,9 +32,8 @@ const Favorite = ({ data, favorites }) => {
 	const [update, setUpdate] = useState(false);
 	const [updateMain, setUpdateMain] = useState(false);
 	
-	const modify_list = (new_data, filter) => {
+	const modify_list = (new_data) => {
 		setRecipeList(new_data);
-		setFilterSelection(filter);
 		setUpdate(!update);
 	};
 	const update_main = (favorite, action, new_change, old_name) => {

@@ -2,6 +2,7 @@
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
+import fs from 'fs';
 
 export async function createTables() {
 	/*try {
@@ -184,11 +185,20 @@ export async function insertRecipe(data, creator) {
 		}
 		const creation_date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
 		
+		const image_data = fs.readFileSync(data.image);
+		
+		if(image_data) {
+			console.log("works")
+		}
+		else {
+			console.log("does not work")
+		}
+		/*
 		await sql`
 			INSERT INTO recipe (recipe_title, cuisine, ingredients, directions, serving, prep_time, cook_time, total_time, notes, creator, creation_date, food_type, food_cost)
 			VALUES (${recipe_title}, ${cuisine}, ${ingredients}, ${directions}, ${serving}, ${prep_time}, ${cook_time}, ${total_time}, ${notes}, ${creator}, ${creation_date}, ${food_type}, ${food_cost})
 			ON CONFLICT (pid) DO NOTHING;
-		`;
+		`;*/
 		
 		return { success: true, redirectUrl: "/home", error: ""};
 	}
@@ -229,16 +239,19 @@ export async function GetAllRecipes() {
 export async function insertUserData(formData: FormData) {
 	try {
 		const temp_date = new Date()
-		if(formData.get("username") !== "" && formData.get("username") !== null) {
+
+		const user_name = formData.get("username")?.toString()
+
+		if(user_name !== "" && user_name) {
 			const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			
-			if(email_regex.test(formData.get("username"))) {
-				const first = formData.get("username").lastIndexOf("@");
-				const second = formData.get("username").lastIndexOf(".");
+			if(email_regex.test(user_name)) {
+				const first = user_name.lastIndexOf("@");
+				const second = user_name.lastIndexOf(".");
 				
-				const email_website = formData.get("username").substring(first + 1, second);
+				const email_website = user_name.substring(first + 1, second);
 				
-				const email_domain = formData.get("username").substring(second + 1, formData.get("username").length);
+				const email_domain = user_name.substring(second + 1, user_name.length);
 				
 				switch(email_website) {
 					case "icloud": {
@@ -282,11 +295,13 @@ export async function insertUserData(formData: FormData) {
 					}
 				}
 				
-				if(formData.get("password") !== "" && formData.get("password") !== null) {
-					if(formData.get("password").length >= 9) {
+				const pass_word = formData.get("password")?.toString()
+
+				if(pass_word !== "" && pass_word) {
+					if(pass_word.length >= 9) {
 						const password_regex = /((\w)*(\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\=|\+|\[|\]|\{|\}|\\|\||\;|\:|\"|\'|\,|\<|\.|\>|\/|\?)+(\w)*)+/;
 						
-						if(password_regex.test(formData.get("password"))) {
+						if(password_regex.test(pass_word)) {
 							const username = formData.get("username")!.toString();
 			
 							const password = await bcrypt.hash(formData.get("password"), 10);

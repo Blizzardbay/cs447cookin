@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import Home from "../components/favorites";
+import Favorite from "../components/favorites";
 import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
 import { cookies } from 'next/headers';
 import { pacifico } from "@/app/fonts/fonts";
@@ -21,7 +21,11 @@ export default async function Page() {
 		// logged_in.value
 		const favorites = await getFavorites(logged_in.value);
 		
-		return (<Home data={data} favorites={favorites.data.rows}/>);
+		if(favorites) {
+			if(favorites.data) {
+				return (<Favorite data={data} favorites={favorites.data.rows}/>);
+			}
+		}
 	}
 
 	return (<Favorite data={data} favorites={null}/>);
