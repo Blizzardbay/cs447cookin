@@ -16,8 +16,10 @@ export default function Login() {
   const [user_logged_in, setUserLoggedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+<<<<<<< Updated upstream
   useEffect(() => {
     const cookie_list = document.cookie;
+=======
 	const login = async (data) => {
 		data.preventDefault();
 		
@@ -35,6 +37,7 @@ export default function Login() {
 			}
 		}
 	};
+>>>>>>> Stashed changes
 
     const str = cookie_list.split("=");
     if (str.length >= 2) {
