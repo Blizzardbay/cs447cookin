@@ -5,12 +5,7 @@ import defaultImage from "../assets/images/defaultImage.png";
 import { useEffect, useState, useRef } from "react";
 import toast from "react-hot-toast";
 import {
-  LogOut,
-  insertRecipe,
-  deleteRecipe,
-  GetAllRecipes,
-  toggleFavorite,
-  getFavorites,
+  toggleFavorite
 } from "@/app/util/data";
 import { useRouter } from "next/navigation";
 
@@ -24,23 +19,6 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-type RecipeCardProps = {
-  recipe: {
-    image?: string;
-    title?: string;
-    cuisine?: string;
-    foodType?: string;
-    cost?: string;
-    ingredients?: string[];
-    directions?: string[];
-    servings?: number;
-    prepTime?: number;
-    cookTime?: number;
-    totalTime?: number;
-    favorite?: boolean;
-    notes?: string;
-  };
-};
 
 export default function ViewRecipeBtn({
   recipe,
@@ -50,7 +28,7 @@ export default function ViewRecipeBtn({
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
   const [isFavorite, setIsFavorite] = useState(false); // State for favorite recipe
-  var has_been_open = useRef(false);
+  const has_been_open = useRef(false);
   const router = useRouter();
 
   // Add favorite recipe to database
@@ -63,7 +41,7 @@ export default function ViewRecipeBtn({
 
       if (str.length >= 2) {
         if (str[0] === "LoggedInUser") {
-          const result = await toggleFavorite(
+          await toggleFavorite(
             !isFavorite,
             decodeURIComponent(str[1]),
             recipe.recipe_title
@@ -99,7 +77,7 @@ export default function ViewRecipeBtn({
       if (str[0] === "LoggedInUser") {
         setLoggedIn(true);
         if (favorites !== null) {
-          for (var i = 0; i < favorites.length; i++) {
+          for (let i = 0; i < favorites.length; i++) {
             if (favorites[i].recipe_title === recipe.recipe_title) {
               setIsFavorite(true);
               router.refresh();
@@ -121,7 +99,7 @@ export default function ViewRecipeBtn({
       if (str[0] === "LoggedInUser") {
         setLoggedIn(true);
         if (favorites !== null) {
-          for (var i = 0; i < favorites.length; i++) {
+          for (let i = 0; i < favorites.length; i++) {
             if (favorites[i].recipe_title === recipe.recipe_title) {
               setIsFavorite(true);
               router.refresh();
@@ -185,7 +163,7 @@ export default function ViewRecipeBtn({
           }}
         >
           <ModalContent>
-            {(onClose) => (
+            {() => (
               <>
                 <ModalHeader
                   className={`${pacifico.className} flex flex-row gap-4`}
@@ -336,7 +314,7 @@ export default function ViewRecipeBtn({
         }}
       >
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader
                 className={`${pacifico.className} flex flex-row gap-4`}

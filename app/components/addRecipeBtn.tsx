@@ -1,15 +1,10 @@
 import { IoAddCircleOutline } from "react-icons/io5";
 import { pacifico } from "@/app/fonts/fonts";
 import Form from "next/form";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import {
-  LogOut,
-  insertRecipe,
-  deleteRecipe,
-  GetAllRecipes,
-  toggleFavorite,
-  getFavorites,
+  insertRecipe
 } from "@/app/util/data";
 import { useRouter } from "next/navigation";
 import {
@@ -55,7 +50,7 @@ export default function AddRecipeBtn() {
 
     if (str.length >= 2) {
       if (str[0] === "LoggedInUser") {
-        var temp = JSON.parse(JSON.stringify(recipe));
+        const temp = JSON.parse(JSON.stringify(recipe));
 
         temp.totalTime = temp.prepTime + temp.cookTime;
 

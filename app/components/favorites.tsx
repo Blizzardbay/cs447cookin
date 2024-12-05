@@ -4,25 +4,12 @@ import { pacifico } from "@/app/fonts/fonts";
 import SideBar from "../components/sideBar";
 import RecipeGrid from "../components/recipeGrid";
 import Header from "../components/header";
-import { useState, useEffect, useRef } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 
 const Favorite = ({ data, favorites }) => {
-
- const [logged_in, setLoggedIn] = useState(false);
-	useEffect(() => {
-		const cookie_list = document.cookie;
-		
-		const str = cookie_list.split("=");
-		if(str.length >= 2) {
-			if(str[0] === "LoggedInUser") {
-				setLoggedIn(true);
-			}
-		}
-	}, []);
 	const [current_favorites, setCurrentFavorites] = useState(favorites);
 	const [recipe_list, setRecipeList] = useState(data.data.filter((recipe) => {
-		for(var i = 0; i < current_favorites.length;i++) {
+		for(let i = 0; i < current_favorites.length;i++) {
 			if(recipe.recipe_title === current_favorites[i].recipe_title) {
 				return true;
 			}
@@ -32,11 +19,6 @@ const Favorite = ({ data, favorites }) => {
 	const [update, setUpdate] = useState(false);
 	const [updateMain, setUpdateMain] = useState(false);
 	
-	const modify_list = (new_data, filter) => {
-		setRecipeList(new_data);
-		setFilterSelection(filter);
-		setUpdate(!update);
-	};
 	const update_main = (favorite, action, new_change, old_name) => {
 		if(action === "REMOVE") {
 			setRecipeList(recipe_list.filter((recipe) => recipe.recipe_title !== favorite.recipe_title));
@@ -51,18 +33,18 @@ const Favorite = ({ data, favorites }) => {
 			}
 			else {
 				if(action === "ADD") {
-					var temp = JSON.parse(JSON.stringify(current_favorites));
+					const temp = JSON.parse(JSON.stringify(current_favorites));
 					temp.push(favorite)
 					setCurrentFavorites(temp);
 				}
 			}
 		}
 		if(action == "MODIFY") {
-			var temp2 = JSON.parse(JSON.stringify(recipe_list));
+			const temp2 = JSON.parse(JSON.stringify(recipe_list));
 			
-			for(var i = 0; i < recipe_list.length;i++) {
+			for(let i = 0; i < recipe_list.length;i++) {
 				if(recipe_list[i].recipe_title === old_name) {
-					var temp = JSON.parse(JSON.stringify(recipe_list[i]));
+					const temp = JSON.parse(JSON.stringify(recipe_list[i]));
 					temp.recipe_title = new_change.title;
 					temp.cuisine = new_change.cuisine;
 					temp.food_type = new_change.foodType;

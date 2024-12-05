@@ -1,15 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect } from "react";
 import { pacifico } from "@/app/fonts/fonts";
 import SideBar from "../components/sideBar";
 import LogOutBtn from "../components/logOutBtn";
 import DeleteAccountBtn from "../components/deleteAccountBtn";
 import Header from "../components/header";
 import profileImage from "@/app/assets/images/pfp.jpg"
-
-import RecipeImage from "../assets/images/grilled-cheese-sandwich.jpg";
 
 export default function Profile() {
   return (

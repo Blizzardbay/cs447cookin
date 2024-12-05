@@ -3,7 +3,7 @@ import { FaRegEdit } from "react-icons/fa";
 import Form from "next/form";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import { insertRecipe, deleteRecipe } from '@/app/util/data';
 import { useRouter } from "next/navigation";
 
 import {
@@ -18,28 +18,6 @@ import {
 
 // TODO: Modify recipe from database
 
-type RecipeCardProps = {
-  recipe: {
-    image?: string;
-    title?: string;
-    cuisine?: string;
-    foodType?: string;
-    cost?: string;
-    ingredients?: string[];
-    directions?: string[];
-    servings?: number;
-    prepTime?: number;
-    cookTime?: number;
-    totalTime?: number;
-    favorite?: boolean;
-    notes?: string;
-  };
-};
-
-type RecipeCardStyle = {
-  style: string;
-};
-
 export default function ModifyRecipeBtn({recipe, style, update_main}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
 
@@ -51,8 +29,8 @@ const router = useRouter();
     cuisine: "",
     foodType: "",
     cost: "",
-    ingredients: [],
-    directions: [],
+    ingredients: [""],
+    directions: [""],
     servings: 0,
     prepTime: 0,
     cookTime: 0,
@@ -61,7 +39,7 @@ const router = useRouter();
   }); // State for editRecipe
 
   useEffect(() => {
-	var temp = JSON.parse(JSON.stringify(editRecipe));
+	const temp = JSON.parse(JSON.stringify(editRecipe));
 	temp.title = recipe.recipe_title;
 	temp.cuisine = recipe.cuisine;
 	temp.foodType = recipe.food_type;
@@ -99,13 +77,13 @@ const router = useRouter();
 		
 		if(str.length >= 2) {
 			if(str[0] === "LoggedInUser" && decodeURIComponent(str[1]) === recipe.creator) {
-				const result1 = await deleteRecipe(recipe.recipe_title);
+				await deleteRecipe(recipe.recipe_title);
 				
-				var temp = JSON.parse(JSON.stringify(editRecipe));
+				const temp = JSON.parse(JSON.stringify(editRecipe));
 				
 				temp.totalTime = temp.prepTime + temp.cookTime;
 				
-				const result2 = await insertRecipe(temp, decodeURIComponent(str[1]))
+				await insertRecipe(temp, decodeURIComponent(str[1]))
 				
 				update_main(null, "MODIFY", JSON.parse(JSON.stringify(temp)), recipe.recipe_title);
 				
@@ -285,7 +263,7 @@ const router = useRouter();
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
-                            ingredients: e.target.value,
+                            ingredients: [e.target.value],
                           })
                         }
                         className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
@@ -302,7 +280,7 @@ const router = useRouter();
                         onChange={(e) =>
                           setEditRecipe({
                             ...editRecipe,
-                            directions: e.target.value,
+                            directions: [e.target.value],
                           })
                         }
                         className="w-full h-20 px-3 border-[1px] border-[#808080] rounded-md truncate"

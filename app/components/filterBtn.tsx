@@ -1,48 +1,44 @@
 import { IoFilter } from "react-icons/io5";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-export default function filterBtn({ recipes, modifyList, currentfSelection, favorites }) {
+const FilterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
   const [filterSelection, setFilterSelection] = useState(currentfSelection);
 
-  const selectedValue = useMemo(
-    () => Array.from(filterSelection).join(", ").replaceAll("_", " "),
-    [filterSelection]
-  );
 	useEffect(() => {
 		switch(filterSelection.currentKey) {
 				case "My Recipes": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					
 					const cookie_list = document.cookie;
 		
 					const str = cookie_list.split("=");
 					
 					if(str.length >= 2) {
-						modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => decodeURIComponent(str[1]) === recipe.creator))), filterSelection.currentKey);
+						modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => decodeURIComponent(str[1]) === recipe.creator))), filterSelection);
 					}
 					break;
 				}
 				case "Favorites": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					
 					modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => {
 						if(favorites !== null) {
-							for(var i = 0; i < favorites.length;i++) {
+							for(let i = 0; i < favorites.length;i++) {
 								if(favorites[i].recipe_title === recipe.recipe_title) {
 									return true;
 								}
 							}
 							return false;
 						}
-					}))), filterSelection.currentKey);
+					}))), filterSelection);
 					break;
 				}
 				case "Descending Cost": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
-						var cost_a = 0;
-						var cost_b = 0;
+						let cost_a = 0;
+						let cost_b = 0;
 						
 						if(a.food_cost === "High") {
 							cost_a = 3;
@@ -64,14 +60,14 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 						}
 						return cost_b - cost_a;
 					});
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "Ascending Cost": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
-						var cost_a = 0;
-						var cost_b = 0;
+						let cost_a = 0;
+						let cost_b = 0;
 						
 						if(a.food_cost === "High") {
 							cost_a = 3;
@@ -93,34 +89,34 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 						}
 						return cost_a - cost_b;
 					});
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "Descending Time": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
 						return b.total_time - a.total_time;
 					});
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "Ascending Time": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
 						return a.total_time - b.total_time;
 					});
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "Recent": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.reverse();
-					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection);
 					break;
 				}
 				case "All":
 				default: {
-					modifyList(JSON.parse(JSON.stringify(recipes)), filterSelection.currentKey);
+					modifyList(JSON.parse(JSON.stringify(recipes)), filterSelection);
 					break;
 				}
 			}
@@ -147,7 +143,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 			  variant="bordered" 
 			  className="capitalize w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium text-black border-black hover:bg-black hover:text-white"
 			>
-			  {selectedValue}<IoFilter size={24} />
+			  {filterSelection}<IoFilter size={24} />
 			</Button>
 		  </DropdownTrigger>
 		  <DropdownMenu 
@@ -177,7 +173,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 			  variant="bordered" 
 			  className="capitalize w-fit h-10 py-1 px-4 gap-4 justify-center items-center text-lg font-medium text-black border-black hover:bg-black hover:text-white"
 			>
-			  {selectedValue}<IoFilter size={24} />
+			  {filterSelection}<IoFilter size={24} />
 			</Button>
 		  </DropdownTrigger>
 		  <DropdownMenu 
@@ -198,3 +194,5 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 		</Dropdown>
 	  );
 }
+
+export default FilterBtn;

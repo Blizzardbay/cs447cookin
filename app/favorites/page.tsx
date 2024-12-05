@@ -1,14 +1,6 @@
-import { StaticImageData } from "next/image";
-import Home from "../components/favorites";
-import { LogOut, insertRecipe, deleteRecipe, GetAllRecipes, toggleFavorite, getFavorites } from '@/app/util/data';
+import Favorite from "../components/favorites";
+import { GetAllRecipes, getFavorites } from '@/app/util/data';
 import { cookies } from 'next/headers';
-import { pacifico } from "@/app/fonts/fonts";
-import SideBar from "../components/sideBar";
-import RecipeGrid from "../components/recipeGrid";
-import Header from "../components/header";
-import FilterBtn from "../components/filterBtn";
-import { useState, useEffect } from "react";
-import toast from "react-hot-toast";
 
 export default async function Page() {
 	const data = await GetAllRecipes();
@@ -21,7 +13,11 @@ export default async function Page() {
 		// logged_in.value
 		const favorites = await getFavorites(logged_in.value);
 		
-		return (<Home data={data} favorites={favorites.data.rows}/>);
+		if(favorites) {
+			if(favorites.data) {
+				return (<Favorite data={data} favorites={favorites.data.rows}/>);
+			}
+		}
 	}
 
 	return (<Favorite data={data} favorites={null}/>);
