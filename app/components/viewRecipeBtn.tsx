@@ -28,7 +28,7 @@ export default function ViewRecipeBtn({
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
   const [isFavorite, setIsFavorite] = useState(false); // State for favorite recipe
-  let has_been_open = useRef(false);
+  const has_been_open = useRef(false);
   const router = useRouter();
 
   // Add favorite recipe to database

@@ -39,7 +39,7 @@ const router = useRouter();
   }); // State for editRecipe
 
   useEffect(() => {
-	let temp = JSON.parse(JSON.stringify(editRecipe));
+	const temp = JSON.parse(JSON.stringify(editRecipe));
 	temp.title = recipe.recipe_title;
 	temp.cuisine = recipe.cuisine;
 	temp.foodType = recipe.food_type;
@@ -79,7 +79,7 @@ const router = useRouter();
 			if(str[0] === "LoggedInUser" && decodeURIComponent(str[1]) === recipe.creator) {
 				await deleteRecipe(recipe.recipe_title);
 				
-				let temp = JSON.parse(JSON.stringify(editRecipe));
+				const temp = JSON.parse(JSON.stringify(editRecipe));
 				
 				temp.totalTime = temp.prepTime + temp.cookTime;
 				

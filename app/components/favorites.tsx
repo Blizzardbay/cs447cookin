@@ -40,11 +40,11 @@ const Favorite = ({ data, favorites }) => {
 			}
 		}
 		if(action == "MODIFY") {
-			let temp2 = JSON.parse(JSON.stringify(recipe_list));
+			const temp2 = JSON.parse(JSON.stringify(recipe_list));
 			
 			for(let i = 0; i < recipe_list.length;i++) {
 				if(recipe_list[i].recipe_title === old_name) {
-					let temp = JSON.parse(JSON.stringify(recipe_list[i]));
+					const temp = JSON.parse(JSON.stringify(recipe_list[i]));
 					temp.recipe_title = new_change.title;
 					temp.cuisine = new_change.cuisine;
 					temp.food_type = new_change.foodType;

@@ -2,7 +2,7 @@ import { IoFilter } from "react-icons/io5";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 import { useState, useMemo, useEffect } from "react";
 
-export default function filterBtn({ recipes, modifyList, currentfSelection, favorites }) {
+const filterBtn = ({ recipes, modifyList, currentfSelection, favorites }) => {
   const [filterSelection, setFilterSelection] = useState(currentfSelection);
 
   const selectedValue = useMemo(
@@ -12,7 +12,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 	useEffect(() => {
 		switch(filterSelection.currentKey) {
 				case "My Recipes": {
-					let temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					
 					const cookie_list = document.cookie;
 		
@@ -24,7 +24,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Favorites": {
-					let temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					
 					modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => {
 						if(favorites !== null) {
@@ -39,7 +39,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Descending Cost": {
-					let temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
 						let cost_a = 0;
 						let cost_b = 0;
@@ -68,7 +68,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Ascending Cost": {
-					let temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
 						let cost_a = 0;
 						let cost_b = 0;
@@ -97,7 +97,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Descending Time": {
-					let temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
 						return b.total_time - a.total_time;
 					});
@@ -105,7 +105,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Ascending Time": {
-					let temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
 						return a.total_time - b.total_time;
 					});
@@ -113,7 +113,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Recent": {
-					let temp = JSON.parse(JSON.stringify(recipes));
+					const temp = JSON.parse(JSON.stringify(recipes));
 					temp.reverse();
 					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
 					break;
@@ -198,3 +198,5 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 		</Dropdown>
 	  );
 }
+
+export default filterBtn;

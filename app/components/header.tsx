@@ -19,7 +19,7 @@ export default function Header() {
                 width={80}
                 className='absolute left-[20%] lg:left-[25%] scale-x-[-1]'
             />
-            <h1 className={`'${pacifico.className}' text-5xl`}>Cookin'</h1>
+            <h1 className={`${pacifico.className} text-5xl`}>Cookin&apos;</h1>
             <Image
 				src={cookinIcon}
 				alt='Cookin Icon'

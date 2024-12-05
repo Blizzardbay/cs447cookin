@@ -49,8 +49,8 @@ useEffect(() => {
       <header
         className={`${pacifico.className} antialiased flex flex-col gap-4 items-center justify-center`}
       >
-        <h1 className="text-8xl">Cookin\'</h1>
-        <p className="text-lg">Cookin\' Up Flavor, One Recipe at a Time!</p>
+        <h1 className="text-8xl">Cookin&apos;</h1>
+        <p className="text-lg">Cookin&apos; Up Flavor, One Recipe at a Time!</p>
       </header>
       <main className="w-[30%] flex flex-col gap-6 justify-center items-center [&>form]:m-auto [&>form]:text-center [&>form]:w-full ">
         <Link href="/home" className="text-3xl font-semibold md:text-4xl">
