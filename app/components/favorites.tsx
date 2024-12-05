@@ -33,7 +33,7 @@ const Favorite = ({ data, favorites }) => {
 			}
 			else {
 				if(action === "ADD") {
-					let temp = JSON.parse(JSON.stringify(current_favorites));
+					const temp = JSON.parse(JSON.stringify(current_favorites));
 					temp.push(favorite)
 					setCurrentFavorites(temp);
 				}
