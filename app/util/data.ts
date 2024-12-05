@@ -2,7 +2,6 @@
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
-import fs from 'fs';
 
 export async function createTables() {
 	/*try {
@@ -185,20 +184,11 @@ export async function insertRecipe(data, creator) {
 		}
 		const creation_date = (temp_date.getMonth() + 1).toString() + "/" + temp_date.getDate().toString() + "/" + temp_date.getFullYear().toString() + " " + temp_date.getHours().toString() + ":" + temp_date.getMinutes().toString() + ":" + temp_date.getSeconds().toString();
 		
-		const image_data = fs.readFileSync(data.image);
-		
-		if(image_data) {
-			console.log("works")
-		}
-		else {
-			console.log("does not work")
-		}
-		/*
 		await sql`
 			INSERT INTO recipe (recipe_title, cuisine, ingredients, directions, serving, prep_time, cook_time, total_time, notes, creator, creation_date, food_type, food_cost)
 			VALUES (${recipe_title}, ${cuisine}, ${ingredients}, ${directions}, ${serving}, ${prep_time}, ${cook_time}, ${total_time}, ${notes}, ${creator}, ${creation_date}, ${food_type}, ${food_cost})
 			ON CONFLICT (pid) DO NOTHING;
-		`;*/
+		`;
 		
 		return { success: true, redirectUrl: "/home", error: ""};
 	}
