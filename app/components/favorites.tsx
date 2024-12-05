@@ -9,7 +9,7 @@ import { useState } from "react";
 const Favorite = ({ data, favorites }) => {
 	const [current_favorites, setCurrentFavorites] = useState(favorites);
 	const [recipe_list, setRecipeList] = useState(data.data.filter((recipe) => {
-		for(var i = 0; i < current_favorites.length;i++) {
+		for(let i = 0; i < current_favorites.length;i++) {
 			if(recipe.recipe_title === current_favorites[i].recipe_title) {
 				return true;
 			}
@@ -33,18 +33,18 @@ const Favorite = ({ data, favorites }) => {
 			}
 			else {
 				if(action === "ADD") {
-					var temp = JSON.parse(JSON.stringify(current_favorites));
+					let temp = JSON.parse(JSON.stringify(current_favorites));
 					temp.push(favorite)
 					setCurrentFavorites(temp);
 				}
 			}
 		}
 		if(action == "MODIFY") {
-			var temp2 = JSON.parse(JSON.stringify(recipe_list));
+			let temp2 = JSON.parse(JSON.stringify(recipe_list));
 			
-			for(var i = 0; i < recipe_list.length;i++) {
+			for(let i = 0; i < recipe_list.length;i++) {
 				if(recipe_list[i].recipe_title === old_name) {
-					var temp = JSON.parse(JSON.stringify(recipe_list[i]));
+					let temp = JSON.parse(JSON.stringify(recipe_list[i]));
 					temp.recipe_title = new_change.title;
 					temp.cuisine = new_change.cuisine;
 					temp.food_type = new_change.foodType;

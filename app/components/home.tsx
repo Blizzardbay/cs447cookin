@@ -7,7 +7,6 @@ import RecipeGrid from "../components/recipeGrid";
 import Header from "../components/header";
 import AddRecipeBtn from "../components/addRecipeBtn";
 import FilterBtn from "../components/filterBtn";
-import { useRouter } from "next/navigation";
 
 // TODO: Add animation for recipes
 // TODO: Add functionality to sideBar (Navigation)
@@ -67,18 +66,18 @@ const Home = ({ data, favorites }) => {
 			}
 			else {
 				if(action === "ADD") {
-					var temp = JSON.parse(JSON.stringify(current_favorites));
+					let temp = JSON.parse(JSON.stringify(current_favorites));
 					temp.push(favorite)
 					setCurrentFavorites(temp);
 				}
 			}
 		}
 		if(action == "MODIFY") {
-			var temp2 = JSON.parse(JSON.stringify(recipe_list));
+			let temp2 = JSON.parse(JSON.stringify(recipe_list));
 			
-			for(var i = 0; i < recipe_list.length;i++) {
+			for(let i = 0; i < recipe_list.length;i++) {
 				if(recipe_list[i].recipe_title === old_name) {
-					var temp = JSON.parse(JSON.stringify(recipe_list[i]));
+					let temp = JSON.parse(JSON.stringify(recipe_list[i]));
 					temp.recipe_title = new_change.title;
 					temp.cuisine = new_change.cuisine;
 					temp.food_type = new_change.foodType;

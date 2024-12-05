@@ -12,7 +12,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 	useEffect(() => {
 		switch(filterSelection.currentKey) {
 				case "My Recipes": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					let temp = JSON.parse(JSON.stringify(recipes));
 					
 					const cookie_list = document.cookie;
 		
@@ -24,11 +24,11 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Favorites": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					let temp = JSON.parse(JSON.stringify(recipes));
 					
 					modifyList(JSON.parse(JSON.stringify(temp.filter(recipe => {
 						if(favorites !== null) {
-							for(var i = 0; i < favorites.length;i++) {
+							for(let i = 0; i < favorites.length;i++) {
 								if(favorites[i].recipe_title === recipe.recipe_title) {
 									return true;
 								}
@@ -39,10 +39,10 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Descending Cost": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					let temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
-						var cost_a = 0;
-						var cost_b = 0;
+						let cost_a = 0;
+						let cost_b = 0;
 						
 						if(a.food_cost === "High") {
 							cost_a = 3;
@@ -68,10 +68,10 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Ascending Cost": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					let temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
-						var cost_a = 0;
-						var cost_b = 0;
+						let cost_a = 0;
+						let cost_b = 0;
 						
 						if(a.food_cost === "High") {
 							cost_a = 3;
@@ -97,7 +97,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Descending Time": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					let temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
 						return b.total_time - a.total_time;
 					});
@@ -105,7 +105,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Ascending Time": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					let temp = JSON.parse(JSON.stringify(recipes));
 					temp.sort((a, b) => {
 						return a.total_time - b.total_time;
 					});
@@ -113,7 +113,7 @@ export default function filterBtn({ recipes, modifyList, currentfSelection, favo
 					break;
 				}
 				case "Recent": {
-					var temp = JSON.parse(JSON.stringify(recipes));
+					let temp = JSON.parse(JSON.stringify(recipes));
 					temp.reverse();
 					modifyList(JSON.parse(JSON.stringify(temp)), filterSelection.currentKey);
 					break;

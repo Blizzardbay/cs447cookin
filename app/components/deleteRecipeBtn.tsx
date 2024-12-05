@@ -16,25 +16,6 @@ import {
 
 // TODO: Delete recipe from database
 
-type RecipeCardProps = {
-    recipe: {
-      image?: string;
-      title?: string;
-      cuisine?: string;
-      foodType?: string;
-      cost?: string;
-      ingredients?: string[];
-      directions?: string[];
-      servings?: number;
-      prepTime?: number;
-      cookTime?: number;
-      totalTime?: number;
-      favorite?: boolean;
-      notes?: string;
-    };
-    style?: string;
-  };
-
 export default function DeleteRecipeBtn({ recipe, style, update_main }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
   const router = useRouter();
@@ -51,7 +32,7 @@ export default function DeleteRecipeBtn({ recipe, style, update_main }) {
 		
 		if(str.length >= 2) {
 			if(decodeURIComponent(str[1]) === recipe.creator) {
-				const result = await deleteRecipe(recipe.recipe_title);
+				await deleteRecipe(recipe.recipe_title);
 				update_main(null, "REMOVELIST", null, recipe.recipe_title)
 				router.refresh()
 			}

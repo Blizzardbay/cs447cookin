@@ -1,7 +1,7 @@
 import DeleteRecipeBtn from "./deleteRecipeBtn";
 import ModifyRecipeBtn from "./modifyRecipeBtn";
 import ViewRecipeBtn from "./viewRecipeBtn";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function RecipeCard({ recipe, favorites, update, update_main }) {
 	const [logged_in, setLoggedIn] = useState(false);

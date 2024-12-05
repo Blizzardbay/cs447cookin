@@ -116,7 +116,7 @@ export async function newFavorite(user, recipe) {
 			`;
 		return { success: true, redirectUrl: "/home", error: ""};
 	}
-	catch (error) {
+	catch {
 		return { success: false, redirectUrl: "/home", error: "Unable to favorite. Please contact website administrator."};
 	}
 }
@@ -126,7 +126,7 @@ export async function removeFavorite(user, recipe) {
 			
 		return { success: true, redirectUrl: "/home", error: ""};
 	}
-	catch (error) {
+	catch  {
 		return { success: false, redirectUrl: "/home", error: "Unable to delete favorite. Please contact website administrator."};
 	}
 }
@@ -166,7 +166,7 @@ export async function insertRecipe(data, creator) {
 		if(!total_time) {
 			return { success: false, redirectUrl: "/home", error: "Invaild Total Time. Total Time must be non-null and not empty."};
 		}
-		var notes = data.notes;
+		let notes = data.notes;
 		if(notes === "") {
 			notes = " ";
 		}
@@ -325,11 +325,11 @@ export async function insertUserData(formData: FormData) {
 			return { success: false, redirectUrl: "/", error: "Invaild email."};
 		}
 	}
-	catch (error) {
+	catch {
 		return { success: false, redirectUrl: "/", error: "Invaild form data. Please contact website administrator."};
 	}
 }
-export async function removeUserData(username, user_logged_in) {
+export async function removeUserData(username) {
 	try {
 		await sql`DELETE FROM user_information WHERE username=${username};`;
 		await sql`DELETE FROM favorite_table WHERE username=${username};`;

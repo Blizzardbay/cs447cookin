@@ -28,7 +28,7 @@ export default function ViewRecipeBtn({
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure(); // State for modal
   const [isFavorite, setIsFavorite] = useState(false); // State for favorite recipe
-  var has_been_open = useRef(false);
+  let has_been_open = useRef(false);
   const router = useRouter();
 
   // Add favorite recipe to database
@@ -41,7 +41,7 @@ export default function ViewRecipeBtn({
 
       if (str.length >= 2) {
         if (str[0] === "LoggedInUser") {
-          const result = await toggleFavorite(
+          await toggleFavorite(
             !isFavorite,
             decodeURIComponent(str[1]),
             recipe.recipe_title
@@ -77,7 +77,7 @@ export default function ViewRecipeBtn({
       if (str[0] === "LoggedInUser") {
         setLoggedIn(true);
         if (favorites !== null) {
-          for (var i = 0; i < favorites.length; i++) {
+          for (let i = 0; i < favorites.length; i++) {
             if (favorites[i].recipe_title === recipe.recipe_title) {
               setIsFavorite(true);
               router.refresh();
@@ -99,7 +99,7 @@ export default function ViewRecipeBtn({
       if (str[0] === "LoggedInUser") {
         setLoggedIn(true);
         if (favorites !== null) {
-          for (var i = 0; i < favorites.length; i++) {
+          for (let i = 0; i < favorites.length; i++) {
             if (favorites[i].recipe_title === recipe.recipe_title) {
               setIsFavorite(true);
               router.refresh();
@@ -163,7 +163,7 @@ export default function ViewRecipeBtn({
           }}
         >
           <ModalContent>
-            {(onClose) => (
+            {() => (
               <>
                 <ModalHeader
                   className={`${pacifico.className} flex flex-row gap-4`}
@@ -314,7 +314,7 @@ export default function ViewRecipeBtn({
         }}
       >
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader
                 className={`${pacifico.className} flex flex-row gap-4`}

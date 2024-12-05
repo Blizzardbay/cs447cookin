@@ -50,7 +50,7 @@ export default function AddRecipeBtn() {
 
     if (str.length >= 2) {
       if (str[0] === "LoggedInUser") {
-        var temp = JSON.parse(JSON.stringify(recipe));
+        let temp = JSON.parse(JSON.stringify(recipe));
 
         temp.totalTime = temp.prepTime + temp.cookTime;
 

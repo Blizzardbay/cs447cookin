@@ -30,7 +30,7 @@ export default function DeleteAccountBtn() {
 		const str = cookie_list.split("=");
 		
 		if(str.length >= 2) {
-			const result = await removeUserData(decodeURIComponent(str[1]), true);
+			const result = await removeUserData(decodeURIComponent(str[1]));
 			
 			if(result.success == true) {
 				if(result.redirectUrl === undefined) {
@@ -89,7 +89,7 @@ export default function DeleteAccountBtn() {
                 <Button
                   onPress={() => {
                     deleteAccount();
-                    onClose;
+                    onClose();
                   }}
                   className="text-white bg-black"
                 >
