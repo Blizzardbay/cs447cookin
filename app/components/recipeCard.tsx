@@ -27,7 +27,7 @@ export default function RecipeCard({ recipe, favorites, update, update_main }) {
 				<DeleteRecipeBtn recipe={recipe} style="absolute top-2 right-2" update_main={update_main} />
 			  </div>
 
-				<h3 className="pl-0 text-lg xl:text-xl font-semibold pointer-events-none">{recipe.recipe_title}</h3>
+				<h3 className="pl-0 text-lg xl:text-xl font-semibold pointer-events-none truncate">{recipe.recipe_title}</h3>
 
 			</div>
 		);

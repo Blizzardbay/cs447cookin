@@ -266,7 +266,7 @@ const router = useRouter();
                             ingredients: [e.target.value],
                           })
                         }
-                        className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
+                        className="w-full h-20 border-[1px] border-[#808080] rounded-md "
                       />
                     </div>
                     <div>
@@ -283,7 +283,7 @@ const router = useRouter();
                             directions: [e.target.value],
                           })
                         }
-                        className="w-full h-20 px-3 border-[1px] border-[#808080] rounded-md truncate"
+                        className="w-full h-20 px-3 border-[1px] border-[#808080] rounded-md "
                       />
                     </div>
                     <div>
@@ -349,7 +349,7 @@ const router = useRouter();
                             notes: e.target.value,
                           })
                         }
-                        className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
+                        className="w-full h-20 border-[1px] border-[#808080] rounded-md"
                       />
                     </div>
                   </div>

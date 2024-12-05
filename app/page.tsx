@@ -44,7 +44,7 @@ useEffect(() => {
 
   return (
     <div
-      className={`${inter.className} antialiased relative h-full w-full min-w-[768px] flex flex-col gap-16 justify-center items-center select-none overflow-hidden`}
+      className={`${inter.className} antialiased relative h-screen w-full min-w-[768px] flex flex-col gap-16 justify-center items-center select-none overflow-hidden`}
     >
       <header
         className={`${pacifico.className} antialiased flex flex-col gap-4 items-center justify-center`}

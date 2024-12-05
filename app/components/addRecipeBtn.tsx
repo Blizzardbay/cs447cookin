@@ -210,7 +210,7 @@ export default function AddRecipeBtn() {
                             ingredients: e.target.value.split(","),
                           })
                         }
-                        className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
+                        className="w-full h-20 border-[1px] border-[#808080] rounded-md "
                       />
                     </div>
                     <div>
@@ -224,7 +224,7 @@ export default function AddRecipeBtn() {
                             directions: e.target.value.split(","),
                           })
                         }
-                        className="w-full h-20 px-3 border-[1px] border-[#808080] rounded-md truncate"
+                        className="w-full h-20 px-3 border-[1px] border-[#808080] rounded-md "
                       />
                     </div>
                     <div>
@@ -286,7 +286,7 @@ export default function AddRecipeBtn() {
                         onChange={(e) =>
                           setRecipe({ ...recipe, notes: e.target.value })
                         }
-                        className="w-full h-20 border-[1px] border-[#808080] rounded-md truncate"
+                        className="w-full h-20 border-[1px] border-[#808080] rounded-md"
                       />
                     </div>
                   </div>

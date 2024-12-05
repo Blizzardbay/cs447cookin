@@ -101,7 +101,7 @@ const Home = ({ data, favorites }) => {
 	
 	if(logged_in === true) {
 	  return (
-		<div className="h-full min-w-[768px] w-full flex items-center overflow-hidden">
+		<div className="h-screen min-w-[768px] w-full flex items-center overflow-hidden">
 		  <SideBar></SideBar>
 		  <div className="w-full h-full flex flex-col">
 			<Header />
